@@ -16,8 +16,22 @@ namespace Project_PewPew
             GamePadState CurrentPad = SetControlerState(PlayerNum);
             Vector2 Direction = CurrentPad.ThumbSticks.Left;
             Direction.Y *= -1;
+            if (Direction.LengthSquared() > 1)
+                Direction.Normalize();
+
             return Direction;
         }
+
+        public static Vector2 Get_Aim_Direction(int PlayerNum)
+        {
+            GamePadState CurrentPad = SetControlerState(PlayerNum);
+            Vector2 Direction = CurrentPad.ThumbSticks.Right;
+            Direction.Y *= -1;
+            if (Direction.LengthSquared() > 1)
+                Direction.Normalize();
+            return Direction;
+        }
+
 
         public static void Update()
         {

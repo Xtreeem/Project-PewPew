@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Core\Actor.cs" />
     <Compile Include="Core\GameObject.cs" />
+    <Compile Include="Core\Enemy.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\GameObjectManager.cs" />
     <Compile Include="Core\Projectile.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Managers\TextureManager.cs" />
+    <Compile Include="Enemies\Standard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

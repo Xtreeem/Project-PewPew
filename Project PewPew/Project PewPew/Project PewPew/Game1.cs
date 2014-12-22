@@ -32,7 +32,8 @@ namespace Project_PewPew
         {
             TextureManager.LoadContent(Content);
             PlayerOne = new Player(new Vector2(200, 200), 1);
-
+            Standard Test = new Standard(new Vector2(400, 400), ref PlayerOne);
+            GameObjectManager.Add(Test);
             GameObjectManager.Add(PlayerOne);
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }

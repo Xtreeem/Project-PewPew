@@ -13,12 +13,13 @@ namespace Project_PewPew
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager Graphics;
+        SpriteBatch SpriteBatch;
+        Player PlayerOne;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -30,7 +31,10 @@ namespace Project_PewPew
         protected override void LoadContent()
         {
             TextureManager.LoadContent(Content);
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            PlayerOne = new Player(new Vector2(200, 200), 1);
+
+            GameObjectManager.Add(PlayerOne);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void UnloadContent()
@@ -39,6 +43,7 @@ namespace Project_PewPew
 
         protected override void Update(GameTime GameTime)
         {
+            InputManager.Update();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             GameObjectManager.Update(GameTime);
@@ -48,9 +53,9 @@ namespace Project_PewPew
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin();
-            GameObjectManager.Draw(spriteBatch);
-            spriteBatch.End();
+            SpriteBatch.Begin();
+            GameObjectManager.Draw(SpriteBatch);
+            SpriteBatch.End();
             base.Draw(gameTime);
         }
     }

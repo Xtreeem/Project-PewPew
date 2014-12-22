@@ -7,14 +7,19 @@ using System.Text;
 
 namespace Project_PewPew
 {
-    class GameObject
+    abstract class GameObject
     {
-        public bool Dying { get; private set; }
+        public Vector2 Position { get; protected set; }
+        public Texture2D Texture { get; protected set; }
 
-        public void Update(GameTime GameTime)
+        public bool Dying { get; protected set; }
+
+        public virtual void Update(GameTime GameTime)
         { }
 
-        public void Draw(SpriteBatch SpriteBatch)
-        { }
+        public virtual void Draw(SpriteBatch SpriteBatch)
+        {
+            SpriteBatch.Draw(Texture, Position, Color.White);
+        }
     }
 }

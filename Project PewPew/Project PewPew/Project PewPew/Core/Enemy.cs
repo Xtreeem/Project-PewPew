@@ -8,23 +8,40 @@ namespace Project_PewPew
 {
     abstract class Enemy : Actor
     {
+        public float AggroRange { get; protected set; }
+        public float DeAggroRange { get; protected set; }
+
         protected Player Target { get; set; }
         public override void Update(Microsoft.Xna.Framework.GameTime GameTime)
         {
-            Move_To_Player();
             base.Update(GameTime);
         }
 
-        private void Move_To_Player()
+        protected void Move_To_Player()
         {
-            //Velocity = InputManager.Get_Aim_Direction(1);
-            //Velocity = Position - Target.Position;
-            //Velocity.Normalize();
-
             Velocity = Target.CenterPos - CenterPos;
             if (Velocity != Vector2.Zero)
                 Velocity = Vector2.Normalize(Velocity);
 
+        }
+
+        public void DeAggro()
+        {
+            Target = null;
+            Velocity = Vector2.Zero;
+        }
+
+        public void Aggro(Player Player)
+        {
+            Target = Player;
+        }
+
+        public bool HasTarget()
+        {
+            if (Target != null)
+                return true;
+            else
+                return false;
         }
 
     }

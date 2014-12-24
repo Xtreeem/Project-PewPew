@@ -8,6 +8,7 @@ namespace Project_PewPew
 {
     abstract class Actor : GameObject
     {
+        public Vector2 CenterPos { get { return Position + Origin; } }
         public Vector2 Velocity { get; protected set; }
         protected float Rotation { get; set; }
         protected float MovementSpeed { get; set; }
@@ -37,7 +38,7 @@ namespace Project_PewPew
             {
                 Rotation = (float)Math.Atan2(Velocity.Y, Velocity.X);
             }
-            Position += (Velocity * (GameTime.ElapsedGameTime.Milliseconds * MovementSpeed));
+            Position += (Velocity * GameTime.ElapsedGameTime.Milliseconds * MovementSpeed);
         }
     }
 }

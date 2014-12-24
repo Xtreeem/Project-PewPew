@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,14 @@ namespace Project_PewPew
 
         private void Move_To_Player()
         {
-            Velocity = InputManager.Get_Aim_Direction(1);
+            //Velocity = InputManager.Get_Aim_Direction(1);
             //Velocity = Position - Target.Position;
             //Velocity.Normalize();
+
+            Velocity = Target.CenterPos - CenterPos;
+            if (Velocity != Vector2.Zero)
+                Velocity = Vector2.Normalize(Velocity);
+
         }
 
     }

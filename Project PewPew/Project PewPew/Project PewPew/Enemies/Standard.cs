@@ -12,7 +12,7 @@ namespace Project_PewPew
         {
             Position = StartPos;
             this.Target = Target;
-            MovementSpeed = 0.4f;
+            MovementSpeed = 0.3f;
             Color = Color.DarkRed;
             Texture = TextureManager.Player;
         }

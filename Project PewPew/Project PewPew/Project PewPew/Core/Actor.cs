@@ -40,5 +40,10 @@ namespace Project_PewPew
             }
             Position += (Velocity * GameTime.ElapsedGameTime.Milliseconds * MovementSpeed);
         }
+
+        public void PushThisUnit(Vector2 PushVector)
+        {
+            Position += PushVector;
+        }
     }
 }

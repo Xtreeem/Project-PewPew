@@ -16,6 +16,11 @@ namespace Project_PewPew
 
         static bool Updating;   //Tracks if the manager is currently inside an updating cycle
 
+        public static void Get_GameObjects(out List<GameObject> MainObjList)
+        {
+            MainObjList = MainObjects;
+        }
+
         /// <summary>
         /// Function called to add an item to the Manager
         /// </summary>

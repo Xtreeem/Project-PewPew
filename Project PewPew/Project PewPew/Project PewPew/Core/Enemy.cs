@@ -10,7 +10,7 @@ namespace Project_PewPew
     {
         public float AggroRange { get; protected set; }
         public float DeAggroRange { get; protected set; }
-
+        public float DistanceToTarget { get { if (Target != null)return Vector2.Distance(Target.CenterPos, CenterPos); else return -1; } }
         protected Player Target { get; set; }
         public override void Update(Microsoft.Xna.Framework.GameTime GameTime)
         {

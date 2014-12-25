@@ -31,10 +31,16 @@ namespace Project_PewPew
         protected override void LoadContent()
         {
             TextureManager.LoadContent(Content);
+            CollisionManager.Initialize();
             PlayerOne = new Player(new Vector2(200, 200), 1);
             Standard Test = new Standard(new Vector2(400, 400), ref PlayerOne);
+            Standard Test2 = new Standard(new Vector2(100, 400), ref PlayerOne);
+            Standard Test3 = new Standard(new Vector2(400, 100), ref PlayerOne);
             GameObjectManager.Add(Test);
+            GameObjectManager.Add(Test2);
+            GameObjectManager.Add(Test3);
             GameObjectManager.Add(PlayerOne);
+            CollisionManager.Test();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 

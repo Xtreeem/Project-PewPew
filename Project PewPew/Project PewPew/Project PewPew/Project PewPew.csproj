@@ -75,6 +75,7 @@
     <Compile Include="Core\Actor.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\Enemy.cs" />
+    <Compile Include="Core\Misc.cs" />
     <Compile Include="Managers\CollisionManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\GameObjectManager.cs" />

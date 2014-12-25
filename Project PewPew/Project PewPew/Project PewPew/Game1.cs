@@ -25,6 +25,10 @@ namespace Project_PewPew
 
         protected override void Initialize()
         {
+            Graphics.PreferredBackBufferHeight = 1080;
+            Graphics.PreferredBackBufferWidth = 1920;
+            Graphics.PreferMultiSampling = true;
+            Graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -33,14 +37,10 @@ namespace Project_PewPew
             TextureManager.LoadContent(Content);
             CollisionManager.Initialize();
             PlayerOne = new Player(new Vector2(200, 200), 1);
-            Standard Test = new Standard(new Vector2(400, 400), ref PlayerOne);
-            Standard Test2 = new Standard(new Vector2(100, 400), ref PlayerOne);
-            Standard Test3 = new Standard(new Vector2(400, 100), ref PlayerOne);
-            GameObjectManager.Add(Test);
-            GameObjectManager.Add(Test2);
-            GameObjectManager.Add(Test3);
+            SpawnMassEnemies();
             GameObjectManager.Add(PlayerOne);
             CollisionManager.Test();
+            CollisionManager.Update();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
@@ -54,6 +54,7 @@ namespace Project_PewPew
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             GameObjectManager.Update(GameTime);
+            CollisionManager.Update();
             base.Update(GameTime);
         }
 
@@ -65,5 +66,20 @@ namespace Project_PewPew
             SpriteBatch.End();
             base.Draw(gameTime);
         }
+
+        private void SpawnMassEnemies()
+        {
+            for (int X = 0; X < 19; X++)
+            {
+                for (int Y = 0; Y < 11; Y++)
+                {
+                    Standard Test = new Standard(new Vector2(X*100, Y*100), ref PlayerOne);
+                    GameObjectManager.Add(Test);
+                }
+            }
+
+
+        }
+
     }
 }

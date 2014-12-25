@@ -10,6 +10,7 @@ namespace Project_PewPew
     static class GameObjectManager
     {
         static List<Player> Players = new List<Player>();
+        static List<Enemy> Enemies = new List<Enemy>();
         static List<GameObject> MainObjects = new List<GameObject>();       //List that will be used to track all GameObjects
         static List<Projectile> Projectiles = new List<Projectile>();   //List that will be used to track all the Projectiles
         static List<GameObject> NewObjects = new List<GameObject>();    //List used to temporarely store all new Objects added to the Manager during an update cycle 
@@ -20,6 +21,20 @@ namespace Project_PewPew
         {
             MainObjList = MainObjects;
         }
+        public static void Get_Players(out List<Player> PlayerList)
+        {
+            PlayerList = Players;
+        }
+        public static void Get_Enemies(out List<Enemy> EnemyList)
+        {
+            EnemyList = Enemies;
+        }
+        public static void Get_Projectiles(out List<Projectile> ProjectileList)
+        {
+            ProjectileList = Projectiles;
+        }
+
+
 
         /// <summary>
         /// Function called to add an item to the Manager
@@ -34,6 +49,8 @@ namespace Project_PewPew
                 MainObjects.Add(Obj);       //If not it adds the object to the Standard list
                 if (Obj is Player)
                     Players.Add(Obj as Player);
+                else if (Obj is Enemy)
+                    Enemies.Add(Obj as Enemy);
             }
         }
 
@@ -49,6 +66,8 @@ namespace Project_PewPew
                 Projectiles.Add(Obj as Projectile);  //Adds it to the projectile list if needed
             else if (Obj is Player)
                 Players.Add(Obj as Player);
+            else if (Obj is Enemy)
+                Enemies.Add(Obj as Enemy);
         }
 
         /// <summary>

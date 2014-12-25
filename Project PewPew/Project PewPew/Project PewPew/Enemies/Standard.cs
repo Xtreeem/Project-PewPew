@@ -15,8 +15,9 @@ namespace Project_PewPew
             MovementSpeed = 0.3f;
             Color = Color.DarkRed;
             Texture = TextureManager.Player;
-            AggroRange = 200f;
-            DeAggroRange = 300f;
+            AggroRange = 2000f;
+            DeAggroRange = 3000f;
+            Size = 10;
         }
 
         public override void Update(GameTime GameTime)

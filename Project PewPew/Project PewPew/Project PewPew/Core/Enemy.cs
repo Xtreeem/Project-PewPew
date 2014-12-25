@@ -8,6 +8,7 @@ namespace Project_PewPew
 {
     abstract class Enemy : Actor
     {
+        public float Size { get; protected set; }
         public float AggroRange { get; protected set; }
         public float DeAggroRange { get; protected set; }
         public float DistanceToTarget { get { if (Target != null)return Vector2.Distance(Target.CenterPos, CenterPos); else return -1; } }

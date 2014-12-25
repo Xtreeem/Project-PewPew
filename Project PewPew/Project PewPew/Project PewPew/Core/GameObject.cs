@@ -12,6 +12,8 @@ namespace Project_PewPew
         public Vector2 Position { get; protected set; }
         public Texture2D Texture { get; protected set; }
 
+        public Object Lock = new Object();
+
         public bool Dying { get; protected set; }
 
         public virtual void Update(GameTime GameTime)

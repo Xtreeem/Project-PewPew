@@ -102,10 +102,11 @@ namespace Project_PewPew
         {
             float oldAngle = (float)Math.Atan2(oldDir.Y, oldDir.X);
             float desiredAngle = (float)Math.Atan2(newDir.Y, newDir.X);
-            //float newAngle = MathHelper.Clamp(desiredAngle, (oldAngle - maxTurnRadians), (oldAngle + maxTurnRadians));
-            float newAngle = MathHelper.Clamp(desiredAngle, WrapAngle(oldAngle - maxTurnRadians), WrapAngle(oldAngle + maxTurnRadians));
-            
-            return new Vector2((float)Math.Cos(newAngle), (float)Math.Sin(newAngle));
+
+            float differance = WrapAngle(desiredAngle - oldAngle);
+            differance = MathHelper.Clamp(differance, -maxTurnRadians, maxTurnRadians);
+            float tempAngle = WrapAngle(oldAngle + differance);
+            return new Vector2((float)Math.Cos(tempAngle), (float)Math.Sin(tempAngle));
         }
 
         /// <summary>

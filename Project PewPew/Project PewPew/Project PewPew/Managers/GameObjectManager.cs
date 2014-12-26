@@ -62,8 +62,8 @@ namespace Project_PewPew
         const float moveInRandomDirInfluenceDefault = 0.05f;
         const float maxTurnRadiansDefault = 4f;
         const float perMemberWeightDefault = 1.0f;
-        const float perDangerWeightDefault = 50.0f;
-        const float perPlayerWeightDefault = 10.0f;
+        const float perDangerWeightDefault = 9.0f;
+        const float perPlayerWeightDefault = 0.0f;
 
         //Used to pass all AI parameters
         static AIParameters aiParameters = new AIParameters();

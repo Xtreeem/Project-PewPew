@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,23 @@ namespace Project_PewPew
             this.PlayerIndex = PlayerIndex;
             Position = StartPos;
             MovementSpeed = 0.6f;
-            Color = Color.BlueViolet;
-            objecttype = ObjectType.Player;
+            Color = Color.HotPink;
+            objecttype = ObjectType.Wall;
         }
 
         public override void Update(GameTime GameTime)
         {
+            if (InputManager.Is_Button_Clicked(PlayerIndex, Buttons.RightShoulder))
+                if (objecttype == ObjectType.Wall)
+                {
+                    this.Color = Color.HotPink;
+                    objecttype = ObjectType.Player;
+                }
+                else
+                {
+                    this.Color = Color.Honeydew;
+                    objecttype = ObjectType.Wall;
+                }
             Direction = InputManager.Get_Movement_Direction(PlayerIndex);
             base.Move(GameTime);
         }

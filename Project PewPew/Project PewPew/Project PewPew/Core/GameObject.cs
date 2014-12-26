@@ -16,9 +16,9 @@ namespace Project_PewPew
     }
     public abstract class GameObject
     {
-        protected Dictionary<ObjectType, Behaviors> Behaviors;
+        protected Dictionary<ObjectType, Behaviors> behaviors;
 
-        public ObjectType AnimalType
+        public ObjectType ObjectType
         {
             get
             {
@@ -85,5 +85,45 @@ namespace Project_PewPew
         {
             SpriteBatch.Draw(Texture, Position, Color.White);
         }
-    }
-}
+        public GameObject()
+        {
+            behaviors = new Dictionary<ObjectType, Behaviors>();
+        }
+
+        /// <summary>
+        /// This function clamps turn rates to no more than maxTurnRadians
+        /// </summary>
+        /// <param name="oldDir">current movement direction</param>
+        /// <param name="newDir">desired movement direction</param>
+        /// <param name="maxTurnRadians">max turn in radians</param>
+        /// <returns></returns>
+        protected static Vector2 ChangeDirection(
+            Vector2 oldDir, Vector2 newDir, float maxTurnRadians)
+        {
+            float oldAngle = (float)Math.Atan2(oldDir.Y, oldDir.X);
+            float desiredAngle = (float)Math.Atan2(newDir.Y, newDir.X);
+            float newAngle = MathHelper.Clamp(desiredAngle, WrapAngle(
+                    oldAngle - maxTurnRadians), WrapAngle(oldAngle + maxTurnRadians));
+            return new Vector2((float)Math.Cos(newAngle), (float)Math.Sin(newAngle));
+        }
+
+        /// <summary>
+        /// clamps the angle in radians between -Pi and Pi.
+        /// </summary>
+        /// <param name="radians"></param>
+        /// <returns></returns>
+        private static float WrapAngle(float radians)
+        {
+            while (radians < -MathHelper.Pi)
+            {
+                radians += MathHelper.TwoPi;
+            }
+            while (radians > MathHelper.Pi)
+            {
+                radians -= MathHelper.TwoPi;
+            }
+            return radians;
+        }
+
+
+}}

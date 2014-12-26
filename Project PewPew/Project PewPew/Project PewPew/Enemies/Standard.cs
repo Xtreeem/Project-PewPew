@@ -18,6 +18,7 @@ namespace Project_PewPew
             AggroRange = 2000f;
             DeAggroRange = 3000f;
             Size = 10;
+            BuildBehaviors();
         }
 
         public override void Update(GameTime GameTime)
@@ -30,6 +31,28 @@ namespace Project_PewPew
                     Move_To_Player();
             }
             base.Update(GameTime);
+        }
+
+        public void BuildBehaviors()
+        {
+            Behaviors WallReactions = new Behaviors();
+            WallReactions.Add(new FleeBehavior(this));
+            behaviors.Add(ObjectType.Player, WallReactions);
+
+            Behaviors FriendlyReactions = new Behaviors();
+            FriendlyReactions.Add(new AlignBehavior(this));
+            FriendlyReactions.Add(new CohesionBehavior(this));
+            FriendlyReactions.Add(new SeparationBehavior(this));
+            behaviors.Add(ObjectType.Enemy, FriendlyReactions);
+        }
+
+        public void ResetThink()
+        {
+            Fleeing = false;
+            aiNewDir = Vector2.Zero;
+            aiNumSeen = 0;
+            reactionDistance = 0f;
+            reactionLocation = Vector2.Zero;
         }
     }
 }

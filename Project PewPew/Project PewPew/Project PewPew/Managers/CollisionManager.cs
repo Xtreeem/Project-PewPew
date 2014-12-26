@@ -16,27 +16,19 @@ namespace Project_PewPew
             GameObjectManager.Get_Enemies(out Enemies);
         }
 
-        public static void Test()
-        {
-            foreach (GameObject GO in MainObjects)
-            {
-                Console.WriteLine("test");
-            }
-        }
-
         public static void Update()
         {
             //foreach (Enemy E in Enemies)
             //{
             //    test(E);
             //}
-            for (int I = 0; I < Enemies.Count; I++)
-            {
-                for (int Y = I + 1; Y < Enemies.Count; Y++) //To ensure that no objects are tested against each other twice
-                {
-                    HandleCollision(Enemies[I], Enemies[Y]);
-                }
-            }
+            //for (int I = 0; I < Enemies.Count; I++)
+            //{
+            //    for (int Y = I + 1; Y < Enemies.Count; Y++) //To ensure that no objects are tested against each other twice
+            //    {
+            //        HandleCollision(Enemies[I], Enemies[Y]);
+            //    }
+            //}
         }
 
         private static void HandleCollision(Enemy A, Enemy B)

@@ -21,7 +21,7 @@ namespace Project_PewPew
         public override void Update(GameTime GameTime)
         {
             Direction = InputManager.Get_Movement_Direction(PlayerIndex);
-            base.Update(GameTime);
+            base.Move(GameTime);
         }
 
 

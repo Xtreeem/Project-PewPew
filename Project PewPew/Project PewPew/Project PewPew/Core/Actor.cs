@@ -22,7 +22,6 @@ namespace Project_PewPew
         public override void Update(GameTime GameTime)
         {
             Move(GameTime);
-            base.Update(GameTime);
         }
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch SpriteBatch)
@@ -31,7 +30,7 @@ namespace Project_PewPew
         }
 
 
-        private void Move(GameTime GameTime)
+        protected void Move(GameTime GameTime)
         {
             if (Direction != Vector2.Zero)
             {

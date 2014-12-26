@@ -42,6 +42,10 @@ namespace Project_PewPew
         /// how much dangerous animals influence it's behavior
         /// </summary>
         public float PerDangerWeight;
+        /// <summary>
+        /// how much the player influence it's behavior
+        /// </summary>
+        public float PerPlayerWeight;
 
 
 
@@ -51,14 +55,16 @@ namespace Project_PewPew
     static class GameObjectManager
     {
         // Default value for the AI parameters
-        const float detectionDefault = 70.0f;
-        const float separationDefault = 50.0f;
+        const float detectionDefault = 10100.0f;
+        const float separationDefault = 20.0f;
         const float moveInOldDirInfluenceDefault = 1.0f;
         const float moveInFlockDirInfluenceDefault = 1.0f;
         const float moveInRandomDirInfluenceDefault = 0.05f;
         const float maxTurnRadiansDefault = 6.0f;
         const float perMemberWeightDefault = 1.0f;
         const float perDangerWeightDefault = 50.0f;
+        const float perPlayerWeightDefault = 1.0f;
+
         //Used to pass all AI parameters
         static AIParameters aiParameters = new AIParameters();
         
@@ -97,6 +103,7 @@ namespace Project_PewPew
             aiParameters.MaxTurnRadians = maxTurnRadiansDefault;
             aiParameters.PerMemberWeight = perMemberWeightDefault;
             aiParameters.PerDangerWeight = perDangerWeightDefault;
+            aiParameters.PerPlayerWeight = perPlayerWeightDefault;
         }
 
         /// <summary>
@@ -190,7 +197,7 @@ namespace Project_PewPew
                         Enemy.Aggro(P);
                 }
             }
-
+            Enemy.ResetThink();
             foreach  (GameObject OtherObject in MainObjects)
             {
                 if (Enemy != OtherObject)

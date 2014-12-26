@@ -81,6 +81,7 @@
     <Compile Include="Core\Enemy.cs" />
     <Compile Include="Core\Misc.cs" />
     <Compile Include="Behaviors\FleeBehavior.cs" />
+    <Compile Include="Behaviors\StandardAttackBehavior.cs" />
     <Compile Include="Managers\CollisionManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\GameObjectManager.cs" />

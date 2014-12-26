@@ -16,6 +16,7 @@ namespace Project_PewPew
             Position = StartPos;
             MovementSpeed = 0.6f;
             Color = Color.BlueViolet;
+            objecttype = ObjectType.Player;
         }
 
         public override void Update(GameTime GameTime)

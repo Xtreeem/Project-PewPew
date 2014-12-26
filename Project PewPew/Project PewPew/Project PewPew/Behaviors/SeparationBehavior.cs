@@ -49,7 +49,7 @@ namespace Project_PewPew
                 weight *= (1 -
                     (float)Owner.ReactionDistance / aiParams.SeparationDistance);
 
-                pushDirection *= (weight * new Vector2(1.5f, 1.5f));
+                pushDirection *= weight;
 
                 reacted = true;
                 reaction += pushDirection;

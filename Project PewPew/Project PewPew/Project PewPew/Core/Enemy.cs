@@ -15,10 +15,12 @@ namespace Project_PewPew
         protected Player Target { get; set; }
         protected Vector2 aiNewDir;
         protected int aiNumSeen;
-        public Enemy()
+        private Random random;
+        public Enemy(ref Random random)
         {
             fleeing = false;
             objecttype = ObjectType.Enemy;
+            this.random = random;
         }
 
         public void Update(GameTime GameTime, ref AIParameters aiParams)
@@ -26,24 +28,30 @@ namespace Project_PewPew
 
             float elapsedTime = (float)GameTime.ElapsedGameTime.TotalSeconds;
 
-            Move_To_Player();
-            Vector2 randomDir = Vector2.Zero;
+            //Vector2 randomDir = Vector2.Zero;
+
+            //randomDir.X = (float)random.NextDouble() - 0.5f;
+            //randomDir.Y = (float)random.NextDouble() - 0.5f;
+            //Vector2.Normalize(ref randomDir, out randomDir);
+
+            //Move_To_Player();
+            //Vector2 randomDir = Vector2.Zero;
 
             if (aiNumSeen > 0)
             {
-                aiNewDir = (Direction * aiParams.MoveInOldDirectionInfluence) +
-                    (aiNewDir * (aiParams.MoveInFlockDirectionInfluence /
-                    (float)aiNumSeen));
+                aiNewDir = (Direction * aiParams.MoveInOldDirectionInfluence)+ (aiNewDir * (aiParams.MoveInFlockDirectionInfluence / (float)aiNumSeen));
             }
             else
             {
                 aiNewDir = Direction * aiParams.MoveInOldDirectionInfluence;
             }
 
-            aiNewDir += (randomDir * aiParams.MoveInRandomDirectionInfluence);
-            Vector2.Normalize(ref aiNewDir, out aiNewDir);
-            aiNewDir = ChangeDirection(Direction, aiNewDir,
-                aiParams.MaxTurnRadians * elapsedTime);
+            if (aiNewDir != Vector2.Zero)
+            {
+
+                Vector2.Normalize(ref aiNewDir, out aiNewDir);
+                aiNewDir = ChangeDirection(Direction, aiNewDir, aiParams.MaxTurnRadians * elapsedTime);
+            }
             Direction = aiNewDir;
 
 
@@ -76,7 +84,14 @@ namespace Project_PewPew
             else
                 return false;
         }
-
+        public void ResetThink()
+        {
+            Fleeing = false;
+            aiNewDir = Vector2.Zero;
+            aiNumSeen = 0;
+            reactionDistance = 0f;
+            reactionLocation = Vector2.Zero;
+        }
         public void ReactTo(GameObject otherObject, ref AIParameters AIparams)
         {
             if (otherObject != null)
@@ -88,7 +103,8 @@ namespace Project_PewPew
                 Vector2 otherLocation = otherObject.Position;
                 //ClosestLocation(ref location, ref otherLocation, 
                 //    out reactionLocation);
-                reactionDistance = Vector2.Distance(Position, reactionLocation);
+                reactionLocation = otherLocation;
+                reactionDistance = Vector2.Distance(Position, otherLocation);
 
                 //we only react if theAnimal is close enough that we can see it
                 if (reactionDistance < AIparams.DetectionDistance)

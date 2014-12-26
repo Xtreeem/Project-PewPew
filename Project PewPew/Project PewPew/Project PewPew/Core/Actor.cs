@@ -21,6 +21,7 @@ namespace Project_PewPew
         }
         public override void Update(GameTime GameTime)
         {
+            if(Direction != null)
             Move(GameTime);
         }
 

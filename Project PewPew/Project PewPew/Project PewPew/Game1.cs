@@ -12,9 +12,9 @@ using Microsoft.Xna.Framework.Media;
 namespace Project_PewPew
 {
  
-
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+    Random TestRandom;
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
         Player PlayerOne;
@@ -23,6 +23,7 @@ namespace Project_PewPew
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            TestRandom = new Random();
         }
 
         protected override void Initialize()
@@ -71,11 +72,11 @@ namespace Project_PewPew
 
         private void SpawnMassEnemies()
         {
-            for (int X = 0; X < 19; X++)
+            for (int X = 0; X < 1; X++)
             {
-                for (int Y = 0; Y < 11; Y++)
+                for (int Y = 0; Y < 10; Y++)
                 {
-                    Standard Test = new Standard(new Vector2(X*100, Y*100), ref PlayerOne);
+                    Standard Test = new Standard(new Vector2(X*100, Y*100), ref PlayerOne, ref TestRandom);
                     GameObjectManager.Add(Test);
                 }
             }

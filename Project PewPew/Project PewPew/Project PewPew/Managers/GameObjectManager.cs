@@ -56,14 +56,14 @@ namespace Project_PewPew
     {
         // Default value for the AI parameters
         const float detectionDefault = 10100.0f;
-        const float separationDefault = 20.0f;
+        const float separationDefault = 120.0f;
         const float moveInOldDirInfluenceDefault = 1.0f;
         const float moveInFlockDirInfluenceDefault = 1.0f;
         const float moveInRandomDirInfluenceDefault = 0.05f;
         const float maxTurnRadiansDefault = 6.0f;
         const float perMemberWeightDefault = 1.0f;
         const float perDangerWeightDefault = 50.0f;
-        const float perPlayerWeightDefault = 1.0f;
+        const float perPlayerWeightDefault = 20.0f;
 
         //Used to pass all AI parameters
         static AIParameters aiParameters = new AIParameters();

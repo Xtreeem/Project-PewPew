@@ -72,7 +72,7 @@ namespace Project_PewPew
 
         private void SpawnMassEnemies()
         {
-            for (int X = 0; X < 1; X++)
+            for (int X = 0; X < 10; X++)
             {
                 for (int Y = 0; Y < 10; Y++)
                 {

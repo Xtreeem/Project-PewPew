@@ -46,12 +46,11 @@ namespace Project_PewPew
                 aiNewDir = Direction * aiParams.MoveInOldDirectionInfluence;
             }
 
-            if (aiNewDir != Vector2.Zero)
-            {
+
 
                 Vector2.Normalize(ref aiNewDir, out aiNewDir);
                 aiNewDir = ChangeDirection(Direction, aiNewDir, aiParams.MaxTurnRadians * elapsedTime);
-            }
+
             Direction = aiNewDir;
 
 

@@ -60,7 +60,7 @@ namespace Project_PewPew
         const float moveInOldDirInfluenceDefault = 1.0f;
         const float moveInFlockDirInfluenceDefault = 1.0f;
         const float moveInRandomDirInfluenceDefault = 0.05f;
-        const float maxTurnRadiansDefault = 6.0f;
+        const float maxTurnRadiansDefault = (float)Math.PI*2;
         const float perMemberWeightDefault = 1.0f;
         const float perDangerWeightDefault = 50.0f;
         const float perPlayerWeightDefault = 20.0f;

@@ -72,9 +72,9 @@ namespace Project_PewPew
 
         private void SpawnMassEnemies()
         {
-            for (int X = 0; X < 10; X++)
+            for (int X = 0; X < 1; X++)
             {
-                for (int Y = 0; Y < 10; Y++)
+                for (int Y = 0; Y < 1; Y++)
                 {
                     Standard Test = new Standard(new Vector2(X*100, Y*100), ref PlayerOne, ref TestRandom);
                     GameObjectManager.Add(Test);

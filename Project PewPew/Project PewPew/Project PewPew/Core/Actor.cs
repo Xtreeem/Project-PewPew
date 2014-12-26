@@ -6,10 +6,9 @@ using System.Text;
 
 namespace Project_PewPew
 {
-    abstract class Actor : GameObject
+    public abstract class Actor : GameObject
     {
         public Vector2 CenterPos { get { return Position + Origin; } }
-        public Vector2 Velocity { get; protected set; }
         protected float Rotation { get; set; }
         protected float MovementSpeed { get; set; }
         protected Color Color { get; set; }
@@ -34,11 +33,11 @@ namespace Project_PewPew
 
         private void Move(GameTime GameTime)
         {
-            if (Velocity != Vector2.Zero)
+            if (Direction != Vector2.Zero)
             {
-                Rotation = (float)Math.Atan2(Velocity.Y, Velocity.X);
+                Rotation = (float)Math.Atan2(Direction.Y, Direction.X);
             }
-            Position += (Velocity * GameTime.ElapsedGameTime.Milliseconds * MovementSpeed);
+            Position += (Direction * GameTime.ElapsedGameTime.Milliseconds * MovementSpeed);
         }
 
         public void PushThisUnit(Vector2 PushVector)

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Project_PewPew
 {
-    class Player : Actor
+    public class Player : Actor
     {
         public int PlayerIndex { get; private set; }
         public Player(Vector2 StartPos, int PlayerIndex)
@@ -20,7 +20,7 @@ namespace Project_PewPew
 
         public override void Update(GameTime GameTime)
         {
-            Velocity = InputManager.Get_Movement_Direction(PlayerIndex);
+            Direction = InputManager.Get_Movement_Direction(PlayerIndex);
             base.Update(GameTime);
         }
 

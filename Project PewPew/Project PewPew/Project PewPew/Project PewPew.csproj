@@ -72,7 +72,11 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\AlignBehavior.cs" />
+    <Compile Include="Behaviors\Behaviors.cs" />
+    <Compile Include="Behaviors\CohesionBehavior.cs" />
     <Compile Include="Core\Actor.cs" />
+    <Compile Include="Behaviors\Behavior.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\Enemy.cs" />
     <Compile Include="Core\Misc.cs" />
@@ -121,6 +125,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

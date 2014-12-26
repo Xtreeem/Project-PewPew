@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Project_PewPew
 {
-    abstract class Enemy : Actor
+    public abstract class Enemy : Actor
     {
         public float Size { get; protected set; }
         public float AggroRange { get; protected set; }
@@ -20,16 +20,16 @@ namespace Project_PewPew
 
         protected void Move_To_Player()
         {
-            Velocity = Target.CenterPos - CenterPos;
-            if (Velocity != Vector2.Zero)
-                Velocity = Vector2.Normalize(Velocity);
+            Direction = Target.CenterPos - CenterPos;
+            if (Direction != Vector2.Zero)
+                Direction = Vector2.Normalize(Direction);
 
         }
 
         public void DeAggro()
         {
             Target = null;
-            Velocity = Vector2.Zero;
+            Direction = Vector2.Zero;
         }
 
         public void Aggro(Player Player)

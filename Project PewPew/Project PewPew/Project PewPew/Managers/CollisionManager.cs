@@ -47,7 +47,7 @@ namespace Project_PewPew
             if (Spacing < CombinedSize)
             {
                 bool LeftorRight = false;
-                if (Misc.Determine_MovingVertical(A.Velocity))
+                if (Misc.Determine_MovingVertical(A.Direction))
                 {
                     if (A.CenterPos.X > B.CenterPos.X)
                         LeftorRight = true;
@@ -61,14 +61,14 @@ namespace Project_PewPew
 
                 if (A.DistanceToTarget > B.DistanceToTarget)
                 {
-                    A.PushThisUnit((A.Velocity * ((CombinedSize - Spacing) / 8)) * -1);
+                    A.PushThisUnit((A.Direction * ((CombinedSize - Spacing) / 8)) * -1);
 
-                    A.PushThisUnit(Misc.Perpendicular((A.Velocity * ((CombinedSize - Spacing) / 1)), LeftorRight));
+                    A.PushThisUnit(Misc.Perpendicular((A.Direction * ((CombinedSize - Spacing) / 1)), LeftorRight));
                 }
                 else
                 {
-                    B.PushThisUnit((B.Velocity * ((CombinedSize - Spacing) / 8)) * -1);
-                    B.PushThisUnit(Misc.Perpendicular((B.Velocity * ((CombinedSize - Spacing) / 1)), LeftorRight));
+                    B.PushThisUnit((B.Direction * ((CombinedSize - Spacing) / 8)) * -1);
+                    B.PushThisUnit(Misc.Perpendicular((B.Direction * ((CombinedSize - Spacing) / 1)), LeftorRight));
                 }
 
             }

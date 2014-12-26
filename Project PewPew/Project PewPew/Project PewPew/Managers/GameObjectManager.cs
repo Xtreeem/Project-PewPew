@@ -46,6 +46,10 @@ namespace Project_PewPew
         /// how much the player influence it's behavior
         /// </summary>
         public float PerPlayerWeight;
+        /// <summary>
+        /// how far the Walls influence it's behavior
+        /// </summary>
+        public float WallRadius;
 
 
 
@@ -60,10 +64,11 @@ namespace Project_PewPew
         const float moveInOldDirInfluenceDefault = 1.0f;
         const float moveInFlockDirInfluenceDefault = 1.0f;
         const float moveInRandomDirInfluenceDefault = 0.05f;
-        const float maxTurnRadiansDefault = (float)Math.PI*2;
+        const float maxTurnRadiansDefault = (float)Math.PI;
         const float perMemberWeightDefault = 1.0f;
         const float perDangerWeightDefault = 50.0f;
         const float perPlayerWeightDefault = 20.0f;
+        const float WallRadiusDefault = 120f;
 
         //Used to pass all AI parameters
         static AIParameters aiParameters = new AIParameters();
@@ -104,6 +109,7 @@ namespace Project_PewPew
             aiParameters.PerMemberWeight = perMemberWeightDefault;
             aiParameters.PerDangerWeight = perDangerWeightDefault;
             aiParameters.PerPlayerWeight = perPlayerWeightDefault;
+            aiParameters.WallRadius = WallRadiusDefault;
         }
 
         /// <summary>

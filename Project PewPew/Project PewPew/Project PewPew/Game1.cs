@@ -17,7 +17,7 @@ namespace Project_PewPew
     Random TestRandom;
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
-        Player PlayerOne;
+        Player PlayerOne, PlayerTwo;
 
         public Game1()
         {
@@ -40,9 +40,11 @@ namespace Project_PewPew
         {
             TextureManager.LoadContent(Content);
             CollisionManager.Initialize();
-            PlayerOne = new Player(new Vector2(200, 200), 1);
+            PlayerOne = new Player(new Vector2(1500, 200), 1);
+            PlayerTwo = new Player(new Vector2(1500, 300), 2);
             SpawnMassEnemies();
             GameObjectManager.Add(PlayerOne);
+            GameObjectManager.Add(PlayerTwo);
             CollisionManager.Update();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }

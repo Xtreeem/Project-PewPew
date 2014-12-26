@@ -27,7 +27,7 @@ namespace Project_PewPew
         {
             base.ResetReaction();
 
-            if (otherObject != null && Vector2.Distance(Owner.Position, otherObject.Position) < (Owner as Enemy).AggroRange)
+            if (otherObject != null && (Owner as Enemy).HasTarget())
             {
                 Vector2 pullDirection = otherObject.Position - Owner.Position;
                 Vector2.Normalize(ref pullDirection, out pullDirection);

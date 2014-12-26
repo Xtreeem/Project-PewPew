@@ -39,7 +39,7 @@ namespace Project_PewPew
 
             if (aiNumSeen > 0)
             {
-                aiNewDir = (Direction * aiParams.MoveInOldDirectionInfluence)+ (aiNewDir * (aiParams.MoveInFlockDirectionInfluence / (float)aiNumSeen));
+                aiNewDir = (Direction * aiParams.MoveInOldDirectionInfluence) + (aiNewDir * (aiParams.MoveInFlockDirectionInfluence / (float)aiNumSeen));
             }
             else
             {
@@ -48,13 +48,13 @@ namespace Project_PewPew
 
 
 
-                Vector2.Normalize(ref aiNewDir, out aiNewDir);
-                aiNewDir = ChangeDirection(Direction, aiNewDir, aiParams.MaxTurnRadians * elapsedTime);
+            Vector2.Normalize(ref aiNewDir, out aiNewDir);
+            aiNewDir = ChangeDirection(Direction, aiNewDir, aiParams.MaxTurnRadians * elapsedTime);
 
             Direction = aiNewDir;
 
-
-            base.Update(GameTime);
+            if (Direction.LengthSquared() > .01f)
+                base.Update(GameTime);
         }
 
         protected void Move_To_Player()

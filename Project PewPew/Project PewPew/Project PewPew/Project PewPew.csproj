@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\AlignBehavior.cs" />
+    <Compile Include="Behaviors\AvoidWallBehavior.cs" />
     <Compile Include="Behaviors\Behaviors.cs" />
     <Compile Include="Behaviors\CohesionBehavior.cs" />
     <Compile Include="Core\Actor.cs" />

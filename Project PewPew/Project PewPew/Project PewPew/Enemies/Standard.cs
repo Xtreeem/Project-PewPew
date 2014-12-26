@@ -12,7 +12,7 @@ namespace Project_PewPew
         {
             Position = StartPos;
             this.Target = Target;
-            MovementSpeed = 0.03f;
+            MovementSpeed = 0.3f;
             Color = Color.DarkRed;
             Texture = TextureManager.Player;
             AggroRange = 200f;
@@ -36,7 +36,7 @@ namespace Project_PewPew
         public void BuildBehaviors()
         {
             Behaviors WallReactions = new Behaviors();
-            WallReactions.Add(new FleeBehavior(this));
+            WallReactions.Add(new AvoidWallBehavior(this));
             behaviors.Add(ObjectType.Wall, WallReactions);
 
             Behaviors FriendlyReactions = new Behaviors();

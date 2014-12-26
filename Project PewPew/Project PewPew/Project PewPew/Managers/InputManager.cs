@@ -32,6 +32,27 @@ namespace Project_PewPew
             return Direction;
         }
 
+        public static bool Is_Button_Clicked(int PlayNum, Buttons Button)
+        {
+            GamePadState CurrentPadState = SetControlerState(PlayNum);
+            GamePadState CurrentOldPadState = SetOldControlerState(PlayNum);
+            if (CurrentPadState.IsButtonDown(Button) && CurrentOldPadState.IsButtonUp(Button))
+                return true;
+            else
+                return false;
+        }
+        public static bool Is_Button_Pressed(int PlayNum, Buttons Button)
+        {
+            GamePadState CurrentPadState = SetControlerState(PlayNum);
+            if (CurrentPadState.IsButtonDown(Button))
+                return true;
+            else
+                return false;
+        }
+
+
+
+
 
         public static void Update()
         {

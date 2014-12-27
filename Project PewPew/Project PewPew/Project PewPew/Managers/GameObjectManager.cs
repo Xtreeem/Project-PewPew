@@ -68,11 +68,11 @@ namespace Project_PewPew
         const float perMemberWeightDefault = 1.0f;
         const float perDangerWeightDefault = 50.0f;
         const float perPlayerWeightDefault = 20.0f;
-        const float WallRadiusDefault = 120f;
+        const float WallRadiusDefault = 150f;
 
         //Used to pass all AI parameters
         static AIParameters aiParameters = new AIParameters();
-        
+
         static List<Player> Players = new List<Player>();
         static List<Enemy> Enemies = new List<Enemy>();
         static List<GameObject> MainObjects = new List<GameObject>();       //List that will be used to track all GameObjects
@@ -160,8 +160,10 @@ namespace Project_PewPew
             {
                 if (GO is Enemy)
                     EnemyUpdate(GameTime, GO as Enemy);
+                else if (GO is Turret)
+                    TurretUpdate(GameTime, GO as Turret);
                 else
-                GO.Update(GameTime);                                    //Calls the currently indexed objects update function
+                    GO.Update(GameTime);                                    //Calls the currently indexed objects update function
             }
             Updating = false;                                           //Marks the end of the update cycle
 
@@ -189,6 +191,22 @@ namespace Project_PewPew
             }
         }
 
+        private static void TurretUpdate(GameTime GameTime, Turret Turret)
+        {
+            if (Turret.NeedNewTarget)
+            {
+                foreach (Enemy E in Enemies)
+                {
+                    float DistanceToCandidate = Vector2.Distance(Turret.CenterPos, E.CenterPos); 
+                    if (DistanceToCandidate < Turret.DistanceToTarget && DistanceToCandidate < Turret.AttackRange)
+                    {
+                        Turret.Set_Target (E);
+                    }
+                }
+            }
+            Turret.FaceTarget();
+        }
+
         private static void EnemyUpdate(GameTime GameTime, Enemy Enemy)
         {
             if (Enemy.HasTarget())
@@ -204,7 +222,7 @@ namespace Project_PewPew
                 }
             }
             Enemy.ResetThink();
-            foreach  (GameObject OtherObject in MainObjects)
+            foreach (GameObject OtherObject in MainObjects)
             {
                 if (Enemy != OtherObject)
                     Enemy.ReactTo(OtherObject, ref aiParameters);

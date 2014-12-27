@@ -34,8 +34,28 @@ namespace Project_PewPew
                     Color = Color.BlueViolet;
                 }
 
+            if(InputManager.Is_Button_Pressed(PlayerIndex, Buttons.LeftTrigger) && InputManager.Is_Button_Clicked(PlayerIndex, Buttons.RightTrigger))
+            {
+                Vector2 TurretPos = Position + (InputManager.Get_Aim_Direction(PlayerIndex) * 120);
+
+                Turret TempTurret = new Turret(this, TurretPos, TurretType.Canon);
+                GameObjectManager.Add(TempTurret);
+            }
+
             Direction = InputManager.Get_Movement_Direction(PlayerIndex);
             base.Move(GameTime);
+        }
+
+        public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch SpriteBatch)
+        {
+            if(InputManager.Is_Button_Pressed(PlayerIndex, Buttons.LeftTrigger))
+            {
+                Vector2 TurretPos = Position + (InputManager.Get_Aim_Direction(PlayerIndex) * 120);
+                SpriteBatch.Draw(TextureManager.TurretBase, TurretPos, null, Color.Lime, 0f, new Vector2(TextureManager.TurretBase.Width / 2, TextureManager.TurretBase.Height / 2), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
+                SpriteBatch.Draw(TextureManager.TurretCanon, TurretPos, null, Color.Lime, 0f, new Vector2(TextureManager.TurretCanon.Width / 2, TextureManager.TurretCanon.Height / 2), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
+            
+            }
+            base.Draw(SpriteBatch);
         }
 
 

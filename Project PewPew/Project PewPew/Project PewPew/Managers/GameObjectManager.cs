@@ -205,6 +205,7 @@ namespace Project_PewPew
                 }
             }
             Turret.FaceTarget();
+            Turret.Update(GameTime);
         }
 
         private static void EnemyUpdate(GameTime GameTime, Enemy Enemy)

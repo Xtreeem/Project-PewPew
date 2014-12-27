@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Project_PewPew
 {
-    class Projectile : GameObject
+    class Projectile : Actor
     {
     }
 }

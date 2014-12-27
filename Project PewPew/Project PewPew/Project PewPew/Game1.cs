@@ -11,10 +11,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Project_PewPew
 {
- 
+
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-    Random TestRandom;
+        Random TestRandom;
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
         Player PlayerOne, PlayerTwo;
@@ -39,13 +39,13 @@ namespace Project_PewPew
         protected override void LoadContent()
         {
             TextureManager.LoadContent(Content);
-            CollisionManager.Initialize();
+            //CollisionManager.Initialize();
             PlayerOne = new Player(new Vector2(1500, 200), 1);
             PlayerTwo = new Player(new Vector2(1500, 300), 2);
             SpawnMassEnemies();
             GameObjectManager.Add(PlayerOne);
             GameObjectManager.Add(PlayerTwo);
-            CollisionManager.Update();
+            //CollisionManager.Update();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
@@ -59,7 +59,7 @@ namespace Project_PewPew
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             GameObjectManager.Update(GameTime);
-            CollisionManager.Update();
+            CollisionManager.Update(ref GameTime);
             base.Update(GameTime);
         }
 
@@ -78,7 +78,7 @@ namespace Project_PewPew
             {
                 for (int Y = 0; Y < 10; Y++)
                 {
-                    Standard Test = new Standard(new Vector2(X*100, Y*100), ref PlayerOne, ref TestRandom);
+                    Standard Test = new Standard(new Vector2(X * 100, Y * 100), ref PlayerOne, ref TestRandom);
                     GameObjectManager.Add(Test);
                 }
             }

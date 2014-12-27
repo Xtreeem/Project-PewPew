@@ -10,6 +10,8 @@ namespace Project_PewPew
     static class TextureManager
     {
         public static Texture2D Player { get; private set; }
+        public static Texture2D Enemy { get; private set; }
+
         public static Texture2D TurretBase { get; private set; }
         public static Texture2D TurretCanon { get; private set; }
 
@@ -17,6 +19,8 @@ namespace Project_PewPew
         public static void LoadContent(ContentManager Content)
         {
             Player = Content.Load<Texture2D>("../../Textures/Player");
+            Enemy = Content.Load<Texture2D>("../../Textures/Enemy");
+
             TurretBase = Content.Load<Texture2D>("../../Textures/TurretBase");
             TurretCanon = Content.Load<Texture2D>("../../Textures/TurretCanon");
 

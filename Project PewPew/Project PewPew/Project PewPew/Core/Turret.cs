@@ -52,6 +52,8 @@ namespace Project_PewPew
             TurretOrigin = new Vector2(TurretTex.Width / 2, TurretTex.Height / 2);
             objecttype = ObjectType.Wall;
             AttackRange = 300;
+            Size = 30;
+            Dying = false;
         }
 
         public void Set_Target(Enemy newTarget)

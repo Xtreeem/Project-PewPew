@@ -19,6 +19,9 @@ namespace Project_PewPew
             MovementSpeed = 0.6f;
             Color = Color.BlueViolet;
             objecttype = ObjectType.Player;
+            Size = 20;
+            Health = 10000;
+            Armor = 10;
         }
 
         public override void Update(GameTime GameTime)

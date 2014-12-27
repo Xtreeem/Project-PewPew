@@ -10,80 +10,151 @@ namespace Project_PewPew
     {
         static List<Enemy> Enemies = new List<Enemy>();
         static List<GameObject> MainObjects = new List<GameObject>();
-        public static void Initialize()
+        public static void Update(ref GameTime GameTime)
         {
             GameObjectManager.Get_GameObjects(out MainObjects);
             GameObjectManager.Get_Enemies(out Enemies);
-        }
 
-        public static void Update()
-        {
-            //foreach (Enemy E in Enemies)
-            //{
-            //    test(E);
-            //}
-            //for (int I = 0; I < Enemies.Count; I++)
-            //{
-            //    for (int Y = I + 1; Y < Enemies.Count; Y++) //To ensure that no objects are tested against each other twice
-            //    {
-            //        HandleCollision(Enemies[I], Enemies[Y]);
-            //    }
-            //}
-        }
-
-        private static void HandleCollision(Enemy A, Enemy B)
-        {
-            //Console.WriteLine("I:" + I + " - Y: " + Y);
-            float Spacing = Vector2.Distance(A.CenterPos, B.CenterPos);
-            float CombinedSize = A.Size + B.Size;
-            if (Spacing < CombinedSize)
+            for (int I = 0; I < MainObjects.Count; I++)
             {
-                bool LeftorRight = false;
-                if (Misc.Determine_MovingVertical(A.Direction))
-                {
-                    if (A.CenterPos.X > B.CenterPos.X)
-                        LeftorRight = true;
-                }
-                else
-                {
-                    if (A.CenterPos.Y > B.CenterPos.Y)
-                        LeftorRight = true;
-                }
-
-
-                if (A.DistanceToTarget > B.DistanceToTarget)
-                {
-                    A.PushThisUnit((A.Direction * ((CombinedSize - Spacing) / 8)) * -1);
-
-                    A.PushThisUnit(Misc.Perpendicular((A.Direction * ((CombinedSize - Spacing) / 1)), LeftorRight));
-                }
-                else
-                {
-                    B.PushThisUnit((B.Direction * ((CombinedSize - Spacing) / 8)) * -1);
-                    B.PushThisUnit(Misc.Perpendicular((B.Direction * ((CombinedSize - Spacing) / 1)), LeftorRight));
-                }
-
+                if (MainObjects[I] is Actor)
+                    for (int Y = I + 1; Y < MainObjects.Count; Y++) //To ensure that no objects are tested against each other twice
+                    {
+                        if (MainObjects[Y] is Actor)
+                            if (CheckCollision(MainObjects[I] as Actor, MainObjects[Y] as Actor))
+                                ManageCollision(MainObjects[I] as Actor, MainObjects[Y] as Actor, ref GameTime);
+                    }
             }
         }
 
-        //private static void test(Enemy E)
-        //{
+        private static void ManageCollision(Actor A, Actor B, ref GameTime GameTime)
+        {
+            if (A is Player)
+            {
+                if (B is Player)
+                {
+                    HandleCollision(A as Player, B as Player, ref GameTime);
+                }
+                else if (B is Enemy)
+                {
+                    HandleCollision(A as Player, B as Enemy, ref GameTime);
+                }
+                else if (B is Turret)
+                {
+                    HandleCollision(A as Player, B as Turret, ref GameTime);
+                }
+                else if (B is Projectile)
+                {
+                    HandleCollision(A as Player, B as Projectile, ref GameTime);
+                }
+            }
+            else if (A is Enemy)
+            {
+                if (B is Player)
+                {
+                    HandleCollision(A as Enemy, B as Player, ref GameTime);
+                }
+                else if (B is Enemy)
+                {
+                    HandleCollision(A as Enemy, B as Enemy, ref GameTime);
+                }
+                else if (B is Turret)
+                {
+                    HandleCollision(A as Enemy, B as Turret, ref GameTime);
+                }
+                else if (B is Projectile)
+                {
+                    HandleCollision(A as Enemy, B as Projectile, ref GameTime);
+                }
+            }
+            else if (A is Turret)
+            {
+                if (B is Player)
+                {
+                    HandleCollision(A as Turret, B as Player, ref GameTime);
+                }
+                else if (B is Enemy)
+                {
+                    HandleCollision(A as Turret, B as Enemy, ref GameTime);
+                }
+                else if (B is Turret)
+                {
+                    HandleCollision(A as Turret, B as Turret, ref GameTime);
+                }
+                else if (B is Projectile)
+                {
+                    HandleCollision(A as Turret, B as Projectile, ref GameTime);
+                }
+            }
+            else if (A is Projectile)
+            {
+                if (B is Player)
+                {
+                    HandleCollision(A as Projectile, B as Player, ref GameTime);
+                }
+                else if (B is Enemy)
+                {
+                    HandleCollision(A as Projectile, B as Enemy, ref GameTime);
+                }
+                else if (B is Turret)
+                {
+                    HandleCollision(A as Projectile, B as Turret, ref GameTime);
+                }
+                else if (B is Projectile)
+                {
+                    HandleCollision(A as Projectile, B as Projectile, ref GameTime);
+                }
+            }
+        }
+        #region CollisionHandlers
+        private static void HandleCollision(Player A, Player B, ref GameTime GameTime)
+        {
+            A.BumpBack();
+            B.BumpBack();
+        }
+        private static void HandleCollision(Player A, Enemy B, ref GameTime GameTime)
+        {
+            A.Damage(B.CollisionDamage);
+            B.Die();
+        }
+        private static void HandleCollision(Player A, Turret B, ref GameTime GameTime) {
+            A.BumpBack();
+            B.BumpBack();
+        }
+        private static void HandleCollision(Player A, Projectile B, ref GameTime GameTime) { }
+        private static void HandleCollision(Enemy A, Player B, ref GameTime GameTime) {
+            A.Die();
+            B.Damage(A.CollisionDamage);
+        }
+        private static void HandleCollision(Enemy A, Enemy B, ref GameTime GameTime) { }
+        private static void HandleCollision(Enemy A, Turret B, ref GameTime GameTime) { }
+        private static void HandleCollision(Enemy A, Projectile B, ref GameTime GameTime) { }
+        private static void HandleCollision(Turret A, Player B, ref GameTime GameTime) {
+            A.BumpBack();
+            B.BumpBack();
+        }
+        private static void HandleCollision(Turret A, Enemy B, ref GameTime GameTime) {
+            A.BumpBack();
+            B.BumpBack();
+        }
+        private static void HandleCollision(Turret A, Turret B, ref GameTime GameTime) { }
+        private static void HandleCollision(Turret A, Projectile B, ref GameTime GameTime) { }
+        private static void HandleCollision(Projectile A, Player B, ref GameTime GameTime) { }
+        private static void HandleCollision(Projectile A, Enemy B, ref GameTime GameTime) { }
+        private static void HandleCollision(Projectile A, Turret B, ref GameTime GameTime) { }
+        private static void HandleCollision(Projectile A, Projectile B, ref GameTime GameTime) { }
+        #endregion
 
-        //    foreach (Enemy En in Enemies)
-        //    {
-        //    Vector2 C = Vector2.Zero;
-        //        if(E != En)
-        //        {
-        //            if((Vector2.Distance(E.CenterPos, En.CenterPos) < 30))
-        //            {
-        //                C = C - (E.CenterPos - En.CenterPos);
-        //            }
-        //        }
-        //    E.PushThisUnit(C);
-        //    }
 
 
-        //}
+        private static bool CheckCollision(Actor A, Actor B)
+        {
+            if (Vector2.Distance(A.CenterPos, B.CenterPos) <= (A.Size + B.Size))
+                return true;
+            else
+                return false;
+        }
+
 
     }
 }

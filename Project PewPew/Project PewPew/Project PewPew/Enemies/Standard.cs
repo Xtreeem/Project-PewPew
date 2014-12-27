@@ -14,10 +14,10 @@ namespace Project_PewPew
             this.Target = Target;
             MovementSpeed = 0.3f;
             Color = Color.DarkRed;
-            Texture = TextureManager.Player;
+            Texture = TextureManager.Enemy;
             AggroRange = 200f;
             DeAggroRange = 3000f;
-            Size = 10;
+            Size = 15;
             BuildBehaviors();
             Health = 100f;
         }

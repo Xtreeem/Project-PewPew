@@ -74,10 +74,7 @@ namespace Project_PewPew
             Target = Player;
         }
 
-        public void Die()
-        {
-            Dying = true;
-        }
+        
 
         public bool HasTarget()
         {

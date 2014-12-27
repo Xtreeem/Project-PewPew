@@ -18,6 +18,7 @@ namespace Project_PewPew
             AggroRange = 200f;
             DeAggroRange = 3000f;
             Size = 15;
+            Armor = 5;
             BuildBehaviors();
             Health = 100f;
         }

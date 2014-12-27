@@ -128,7 +128,10 @@ namespace Project_PewPew
         }
         private static void HandleCollision(Enemy A, Enemy B, ref GameTime GameTime) { }
         private static void HandleCollision(Enemy A, Turret B, ref GameTime GameTime) { }
-        private static void HandleCollision(Enemy A, Projectile B, ref GameTime GameTime) { }
+        private static void HandleCollision(Enemy A, Projectile B, ref GameTime GameTime) {
+            A.Damage(B.Weapon.Damage);
+            B.Die();
+        }
         private static void HandleCollision(Turret A, Player B, ref GameTime GameTime) {
             A.BumpBack();
             B.BumpBack();
@@ -140,7 +143,10 @@ namespace Project_PewPew
         private static void HandleCollision(Turret A, Turret B, ref GameTime GameTime) { }
         private static void HandleCollision(Turret A, Projectile B, ref GameTime GameTime) { }
         private static void HandleCollision(Projectile A, Player B, ref GameTime GameTime) { }
-        private static void HandleCollision(Projectile A, Enemy B, ref GameTime GameTime) { }
+        private static void HandleCollision(Projectile A, Enemy B, ref GameTime GameTime) {
+            A.Die();
+            B.Damage(A.Weapon.Damage);
+        }
         private static void HandleCollision(Projectile A, Turret B, ref GameTime GameTime) { }
         private static void HandleCollision(Projectile A, Projectile B, ref GameTime GameTime) { }
         #endregion

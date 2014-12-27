@@ -11,7 +11,7 @@ namespace Project_PewPew
     {
         public static Texture2D Player { get; private set; }
         public static Texture2D Enemy { get; private set; }
-
+        public static Texture2D BasicBullet { get; private set; }
         public static Texture2D TurretBase { get; private set; }
         public static Texture2D TurretCanon { get; private set; }
 
@@ -20,7 +20,7 @@ namespace Project_PewPew
         {
             Player = Content.Load<Texture2D>("../../Textures/Player");
             Enemy = Content.Load<Texture2D>("../../Textures/Enemy");
-
+            BasicBullet = Content.Load<Texture2D>("../../Textures/BasicBullet");
             TurretBase = Content.Load<Texture2D>("../../Textures/TurretBase");
             TurretCanon = Content.Load<Texture2D>("../../Textures/TurretCanon");
 

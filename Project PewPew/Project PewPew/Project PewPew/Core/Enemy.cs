@@ -16,6 +16,7 @@ namespace Project_PewPew
         protected Vector2 aiNewDir;
         protected int aiNumSeen;
         private Random random;
+        public float Health { get; protected set; }
         public Enemy(ref Random random)
         {
             fleeing = false;
@@ -25,6 +26,10 @@ namespace Project_PewPew
 
         public void Update(GameTime GameTime, ref AIParameters aiParams)
         {
+            if (Health <= 0)
+                Dying = true;
+            if(!Dying)
+            {
 
             float elapsedTime = (float)GameTime.ElapsedGameTime.TotalSeconds;
 
@@ -55,6 +60,7 @@ namespace Project_PewPew
 
             if (Direction.LengthSquared() > .01f)
                 base.Update(GameTime);
+            }
         }
 
         protected void Move_To_Player()
@@ -91,21 +97,25 @@ namespace Project_PewPew
             reactionDistance = 0f;
             reactionLocation = Vector2.Zero;
         }
+
+        public void Damage(float Amount)
+        {
+            Health -= Amount;
+        }
+        public void Heal(float Amount)
+        {
+            Health += Amount;
+        }
+
         public void ReactTo(GameObject otherObject, ref AIParameters AIparams)
         {
             if (otherObject != null)
             {
-                //setting the the reactionLocation and reactionDistance here is
-                //an optimization, many of the possible reactions use the distance
-                //and location of theAnimal, so we might as well figure them out
-                //only once !
+                
                 Vector2 otherLocation = otherObject.Position;
-                //ClosestLocation(ref location, ref otherLocation, 
-                //    out reactionLocation);
                 reactionLocation = otherLocation;
                 reactionDistance = Vector2.Distance(Position, otherLocation);
 
-                //we only react if theAnimal is close enough that we can see it
                 if (reactionDistance < AIparams.DetectionDistance)
                 {
                     if (otherObject.ObjectType != ObjectType.Generic)

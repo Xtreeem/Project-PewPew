@@ -33,7 +33,6 @@ namespace Project_PewPew
                 Vector2.Normalize(ref pullDirection, out pullDirection);
                 reacted = true;
                 reaction = pullDirection * aiParams.PerPlayerWeight;
-                reaction = reaction;
             }
         }
         #endregion

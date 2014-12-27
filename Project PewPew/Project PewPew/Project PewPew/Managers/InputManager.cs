@@ -50,10 +50,6 @@ namespace Project_PewPew
                 return false;
         }
 
-
-
-
-
         public static void Update()
         {
             GamePadOneOld = GamePadOne;

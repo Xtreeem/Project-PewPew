@@ -10,6 +10,7 @@ namespace Project_PewPew
     public class Player : Actor
     {
         public int PlayerIndex { get; private set; }
+            ObjectType oldObjectType;
         public Player(Vector2 StartPos, int PlayerIndex)
         {
             Texture = TextureManager.Player;
@@ -28,10 +29,15 @@ namespace Project_PewPew
                     objecttype = ObjectType.Wall;
                     Color = Color.HotPink;
                 }
-                else
+                else if (objecttype == ObjectType.Generic)
                 {
                     objecttype = ObjectType.Player;
                     Color = Color.BlueViolet;
+                }
+                else if (objecttype == ObjectType.Wall)
+                {
+                    objecttype = ObjectType.Generic;
+                    Color = Color.Yellow;
                 }
 
             if(InputManager.Is_Button_Pressed(PlayerIndex, Buttons.LeftTrigger) && InputManager.Is_Button_Clicked(PlayerIndex, Buttons.RightTrigger))
@@ -51,8 +57,8 @@ namespace Project_PewPew
             if(InputManager.Is_Button_Pressed(PlayerIndex, Buttons.LeftTrigger))
             {
                 Vector2 TurretPos = Position + (InputManager.Get_Aim_Direction(PlayerIndex) * 120);
-                SpriteBatch.Draw(TextureManager.TurretBase, TurretPos, null, Color.Lime, 0f, new Vector2(TextureManager.TurretBase.Width / 2, TextureManager.TurretBase.Height / 2), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
-                SpriteBatch.Draw(TextureManager.TurretCanon, TurretPos, null, Color.Lime, 0f, new Vector2(TextureManager.TurretCanon.Width / 2, TextureManager.TurretCanon.Height / 2), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
+                SpriteBatch.Draw(TextureManager.TurretBase, TurretPos, null, Color.Lime *0.2f, 0f, new Vector2(TextureManager.TurretBase.Width / 2, TextureManager.TurretBase.Height / 2), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
+                SpriteBatch.Draw(TextureManager.TurretCanon, TurretPos, null, Color.Lime *0.2f, 0f, new Vector2(TextureManager.TurretCanon.Width / 2, TextureManager.TurretCanon.Height / 2), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
             
             }
             base.Draw(SpriteBatch);

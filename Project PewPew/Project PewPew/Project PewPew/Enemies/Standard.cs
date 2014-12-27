@@ -19,6 +19,7 @@ namespace Project_PewPew
             DeAggroRange = 3000f;
             Size = 10;
             BuildBehaviors();
+            Health = 100f;
         }
 
         public override void Update(GameTime GameTime)
@@ -40,7 +41,6 @@ namespace Project_PewPew
             behaviors.Add(ObjectType.Wall, WallReactions);
 
             Behaviors FriendlyReactions = new Behaviors();
-            //FriendlyReactions.Add(new AlignBehavior(this));
             FriendlyReactions.Add(new CohesionBehavior(this));
             FriendlyReactions.Add(new SeparationBehavior(this));
             behaviors.Add(ObjectType.Enemy, FriendlyReactions);

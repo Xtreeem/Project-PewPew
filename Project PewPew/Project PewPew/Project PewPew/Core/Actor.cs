@@ -19,6 +19,7 @@ namespace Project_PewPew
         protected float Rotation { get; set; }
         public float MovementSpeed { get; protected set; }
         protected Color Color { get; set; }
+        public bool Friendly { get; protected set; }
         public Vector2 LastPosition { get; protected set; }
         protected Vector2 Origin
         {

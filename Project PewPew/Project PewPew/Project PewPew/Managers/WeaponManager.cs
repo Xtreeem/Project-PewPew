@@ -14,12 +14,14 @@ namespace Project_PewPew
         public float Damage;                //Damage per projectile
         public float ProjectileSpeed;       //Speed of the Projectile
         public float ProjectileLifeTime;    //The Time a projectile will live
+        public float ProjectileRange;       //The distance a projectile may travel before despawning
         public int NumberOfProjecties;      //Number of shots fired
         public FireMode FireMode;           //How the weapon Fires
         public bool Homing;                 //Is the attack Homing
         public bool Explosive;              //Will the attack explode on hit
         public Texture2D ProjectileTexture; //Texture used for the projectiles
         public Color Color;                 //Color of the projectile
+        public bool FriendlyFire;           //Checks to see if the projectile can damage friendlies
     }
 
     public enum FireMode
@@ -46,8 +48,10 @@ namespace Project_PewPew
             TempWeapon.FireMode = FireMode.FullAuto;
             TempWeapon.Homing = false;
             TempWeapon.NumberOfProjecties = 1;
+            TempWeapon.ProjectileRange = 1000;
             TempWeapon.ProjectileTexture = TextureManager.BasicBullet;
             TempWeapon.Color = Color.White;
+            TempWeapon.FriendlyFire = false;
             Weapons.Add(TempWeapon);
             #endregion
         }

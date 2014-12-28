@@ -22,6 +22,7 @@ namespace Project_PewPew
             objecttype = ObjectType.Enemy;
             this.random = random;
             CollisionDamage = 100;
+            Friendly = false;
         }
 
         public void Update(GameTime GameTime, ref AIParameters aiParams)

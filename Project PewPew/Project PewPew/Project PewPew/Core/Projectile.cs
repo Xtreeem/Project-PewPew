@@ -10,9 +10,11 @@ namespace Project_PewPew
     {
         public Actor Creator { get; protected set; }
         private float LifeTimer;
+        private Vector2 StartPos;
 
         public Projectile(Vector2 StartPos, Vector2 StartDir, Actor Creator)
         {
+            this.StartPos = StartPos;
             Weapon = Creator.Weapon;
             Position = StartPos;
             Direction = Vector2.Normalize(StartDir);
@@ -25,6 +27,8 @@ namespace Project_PewPew
 
         public override void Update(GameTime GameTime)
         {
+            if (Vector2.Distance(StartPos, Position) > Weapon.ProjectileRange)
+                Dying = true;
             if (LifeTimer < 0)
                 Dying = true;
             else

@@ -24,7 +24,7 @@ namespace Project_PewPew
             Armor = 10;
             Weapon = WeaponManager.Get_Weapon("BasicPew");
             SecondaryWeapon = WeaponManager.Get_Weapon("BasicPew");
-
+            Friendly = true;
         }
 
         public override void Update(GameTime GameTime)

@@ -103,6 +103,7 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
+    <Content Include="TODO LIST.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Project PewPewContent\Project PewPewContent.contentproj">

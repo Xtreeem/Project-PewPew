@@ -8,10 +8,9 @@ namespace Project_PewPew
 {
     class Standard : Enemy
     {
-        public Standard(Vector2 StartPos, ref Player Target, ref Random random) : base(ref random)
+        public Standard(Vector2 StartPos, ref Random random) : base(ref random)
         {
             Position = StartPos;
-            this.Target = Target;
             MovementSpeed = 0.3f;
             Color = Color.DarkRed;
             Texture = TextureManager.Enemy;

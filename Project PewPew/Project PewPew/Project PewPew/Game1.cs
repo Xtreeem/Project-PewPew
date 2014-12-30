@@ -79,7 +79,7 @@ namespace Project_PewPew
             {
                 for (int Y = 0; Y < 10; Y++)
                 {
-                    Standard Test = new Standard(new Vector2(X * 100, Y * 100), ref PlayerOne, ref TestRandom);
+                    Standard Test = new Standard(new Vector2(X * 100, Y * 100), ref TestRandom);
                     GameObjectManager.Add(Test);
                 }
             }

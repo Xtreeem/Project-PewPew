@@ -4,3 +4,5 @@
 	-Make sure enemies without a target dont fly away 
 	-Implement the swap weapon funktion 
 	-Implement a weapon to test another weapon
+	-Implement A GUI 
+	-Implement Powerup

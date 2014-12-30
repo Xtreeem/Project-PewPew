@@ -10,7 +10,7 @@ namespace Project_PewPew
     public class Player : Actor
     {
         public int PlayerIndex { get; private set; }
-        public Weapon SecondaryWeapon { get; set; }
+        public Weapon SecondaryWeapon { get; private set; }
         public Player(Vector2 StartPos, int PlayerIndex)
         {
             Texture = TextureManager.Player;
@@ -62,7 +62,7 @@ namespace Project_PewPew
 
             //if (InputManager.Is_Button_Pressed(PlayerIndex, Buttons.LeftTrigger))
 
-                Direction = InputManager.Get_Movement_Direction(PlayerIndex);
+            Direction = InputManager.Get_Movement_Direction(PlayerIndex);
             base.Update(GameTime);
         }
 
@@ -85,5 +85,26 @@ namespace Project_PewPew
             SecondaryWeapon = Weapon;
         }
 
+        public void GetWeaponPoweredUp(Weapon Modification)
+        {
+            Weapon TempWeapon = new Weapon();
+            TempWeapon.AttackRate = MathHelper.Clamp((Weapon.AttackRate - Modification.AttackRate), 0.1f, 1000f);
+            if (Modification.Color != new Color(0, 0, 0, 0))
+                TempWeapon.Color = Modification.Color;
+            else
+                TempWeapon.Color = Weapon.Color;
+            TempWeapon.Damage = Weapon.Damage + Modification.Damage;
+            TempWeapon.NumberOfProjecties = Weapon.NumberOfProjecties + Modification.NumberOfProjecties;
+            TempWeapon.ProjectileRange = Weapon.ProjectileRange + TempWeapon.ProjectileRange;
+            TempWeapon.ProjectileLifeTime = Weapon.ProjectileLifeTime + Modification.ProjectileLifeTime;
+            TempWeapon.ProjectileSpeed = Weapon.ProjectileSpeed + Modification.ProjectileSpeed;
+            TempWeapon.FriendlyFire = Weapon.FriendlyFire;
+            TempWeapon.Explosive = Weapon.Explosive;
+            if (Modification.ProjectileTexture != null)
+                TempWeapon.ProjectileTexture = Modification.ProjectileTexture;
+            else
+                TempWeapon.ProjectileTexture = Weapon.ProjectileTexture;
+            Weapon = TempWeapon;
+        }
     }
 }

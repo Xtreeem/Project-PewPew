@@ -22,6 +22,7 @@ namespace Project_PewPew
             Texture = Weapon.ProjectileTexture;
             MovementSpeed = Weapon.ProjectileSpeed;
             Color = Weapon.Color;
+            Size = 2;
             LifeTimer = Weapon.ProjectileLifeTime;
         }
 

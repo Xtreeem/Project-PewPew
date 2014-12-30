@@ -52,7 +52,7 @@ namespace Project_PewPew
             Texture = TextureManager.TurretBase;
             TurretOrigin = new Vector2(TurretTex.Width / 2, TurretTex.Height / 2);
             objecttype = ObjectType.Wall;
-            AttackRange = 300;
+            AttackRange = 3000;
             Size = 20;
             Dying = false;
             this.Weapon = Creator.Weapon;

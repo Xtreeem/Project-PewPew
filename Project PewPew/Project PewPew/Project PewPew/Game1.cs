@@ -50,8 +50,7 @@ namespace Project_PewPew
         protected override void Update(GameTime GameTime)
         {
             InputManager.Update();
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            DebugStuff();
             GameObjectManager.Update(GameTime);
             CollisionManager.Update(ref GameTime);
             base.Update(GameTime);
@@ -80,7 +79,13 @@ namespace Project_PewPew
 
         private void DebugStuff()
         {
-            
+            for (int I = 0; I < 4; I++)
+            {
+                if (InputManager.Is_Button_Clicked(I, Buttons.Back))
+                {
+                    GameObjectManager.Add(new AS_Increase(new Vector2(500, 500), 10f));
+                }
+            }
         }
 
     }

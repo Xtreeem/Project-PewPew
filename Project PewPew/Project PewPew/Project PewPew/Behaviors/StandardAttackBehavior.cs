@@ -29,11 +29,11 @@ namespace Project_PewPew
 
             if (otherObject != null && (Owner as Enemy).HasTarget())
             {
-                    Vector2 pullDirection = otherObject.Position - Owner.Position;
-                    Vector2.Normalize(ref pullDirection, out pullDirection);
-                    reacted = true;
-                    reaction = pullDirection * aiParams.PerPlayerWeight;
-                    reaction = reaction;
+                Vector2 pullDirection = otherObject.Position - Owner.Position;
+                Vector2.Normalize(ref pullDirection, out pullDirection);
+                reacted = true;
+                reaction = pullDirection * aiParams.PerPlayerWeight;
+                reaction = reaction;
             }
         }
         #endregion

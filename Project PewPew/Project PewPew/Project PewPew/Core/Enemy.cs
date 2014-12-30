@@ -53,7 +53,7 @@ namespace Project_PewPew
 
             Direction = aiNewDir;
 
-            if (Direction.LengthSquared() > 0.1f)
+            if (Direction.LengthSquared() > .01f)
                 base.Update(GameTime);
         }
 

@@ -316,8 +316,6 @@ namespace Project_PewPew
 
         #endregion
 
-
-
         private static bool CheckCollision(Actor A, Actor B)
         {
             if (Vector2.Distance(A.CenterPos, B.CenterPos) <= (A.Size + B.Size))

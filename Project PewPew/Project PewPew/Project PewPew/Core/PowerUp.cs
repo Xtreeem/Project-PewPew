@@ -7,12 +7,8 @@ namespace Project_PewPew
 {
     abstract class PowerUp : Actor
     {
-
-        public virtual void PickedUp(ref Player Player)
-        {
-            //Player.Weapon.AttackRate += 0.4; etc
-            Die();
-        }
+        protected float PowerUpStrength;
+        public virtual void PickedUp(ref Player Player) { }
 
 
     }

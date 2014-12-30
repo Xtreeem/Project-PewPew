@@ -11,7 +11,7 @@ namespace Project_PewPew
 
     public abstract class Actor : GameObject
     {
-        public Weapon Weapon { get; protected set; }
+        public Weapon Weapon { get; set; }
         protected float Armor { get; set; }
         public float Health { get; protected set; }
         public float Size { get; protected set; }

@@ -14,15 +14,19 @@ namespace Project_PewPew
         public static Texture2D BasicBullet { get; private set; }
         public static Texture2D TurretBase { get; private set; }
         public static Texture2D TurretCanon { get; private set; }
-
+        public static Texture2D BasicPowerUp { get; private set; }
+        public static Texture2D AttackSpeedPowerUp { get; private set; }
 
         public static void LoadContent(ContentManager Content)
         {
             Player = Content.Load<Texture2D>("../../Textures/Player");
-            Enemy = Content.Load<Texture2D>("../../Textures/Enemy");
+            Enemy = Content.Load<Texture2D>("../../Textures/Enemy/Enemy");
             BasicBullet = Content.Load<Texture2D>("../../Textures/BasicBullet");
-            TurretBase = Content.Load<Texture2D>("../../Textures/TurretBase");
-            TurretCanon = Content.Load<Texture2D>("../../Textures/TurretCanon");
+            TurretBase = Content.Load<Texture2D>("../../Textures/Turrets/TurretBase");
+            TurretCanon = Content.Load<Texture2D>("../../Textures/Turrets/TurretCanon");
+            BasicPowerUp = Content.Load<Texture2D>("../../Textures/PowerUp/PowerUp");
+            AttackSpeedPowerUp = Content.Load<Texture2D>("../../Textures/PowerUp/ASPowerUp");
+
 
         }
     }

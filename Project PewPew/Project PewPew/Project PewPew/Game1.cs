@@ -17,7 +17,6 @@ namespace Project_PewPew
         Random TestRandom;
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
-        //Player PlayerOne, PlayerTwo;
 
         public Game1()
         {
@@ -40,13 +39,7 @@ namespace Project_PewPew
         {
             TextureManager.LoadContent(Content);
             WeaponManager.Initialize();
-            //CollisionManager.Initialize();
-            //PlayerOne = new Player(new Vector2(1500, 200), 1);
-            //PlayerTwo = new Player(new Vector2(1500, 300), 2);
             SpawnMassEnemies();
-            //GameObjectManager.Add(PlayerOne);
-            //GameObjectManager.Add(PlayerTwo);
-            //CollisionManager.Update();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
@@ -83,8 +76,11 @@ namespace Project_PewPew
                     GameObjectManager.Add(Test);
                 }
             }
+        }
 
-
+        private void DebugStuff()
+        {
+            
         }
 
     }

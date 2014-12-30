@@ -10,7 +10,7 @@ namespace Project_PewPew
     public class Player : Actor
     {
         public int PlayerIndex { get; private set; }
-        Weapon SecondaryWeapon;
+        public Weapon SecondaryWeapon { get; set; }
         public Player(Vector2 StartPos, int PlayerIndex)
         {
             Texture = TextureManager.Player;

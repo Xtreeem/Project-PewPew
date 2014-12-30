@@ -93,11 +93,18 @@ namespace Project_PewPew
         {
             EnemyList = Enemies;
         }
+        /// <summary>
+        /// Returns the list of projectiles as it is atm
+        /// </summary>
+        /// <param name="ProjectileList">List of all active projectiles</param>
         public static void Get_Projectiles(out List<Projectile> ProjectileList)
         {
             ProjectileList = Projectiles;
         }
 
+        /// <summary>
+        /// Sets all the AI parameters to match the default values
+        /// </summary>
         public static void IniatlizeAIParamaters()
         {
             aiParameters.DetectionDistance = detectionDefault;
@@ -176,19 +183,28 @@ namespace Project_PewPew
             MainObjects = MainObjects.Where(x => !x.Dying).ToList();    //Cleans out all of the dying objects from the Main Object list
             Projectiles = Projectiles.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
 
+            PressStartToJoinCheck();
+            
+        }
 
-            for (int I = 0; I < 4; I++)
+        /// <summary>
+        /// Function used to detect if any In-active player has pressed their start button
+        /// if so adds the player to the game.
+        /// </summary>
+        private static void PressStartToJoinCheck()
+        {
+            for (int I = 0; I < 4; I++)                                                             //Loops the max number of supported players
             {
-                if(InputManager.Is_Button_Clicked(I, Microsoft.Xna.Framework.Input.Buttons.Start))
+                if (InputManager.Is_Button_Clicked(I, Microsoft.Xna.Framework.Input.Buttons.Start)) //Checks if the player has pressed their start-button
                 {
-                bool Found = false;
-                    foreach (Player P in Players)
+                    bool Found = false;                                                             //Sets a temp bool to false, indicating that we havent found that palyer ID yet
+                    foreach (Player P in Players)                                                   //Checks each active players ID
                     {
-                        if (P.PlayerIndex == I)
-                            Found = true;
+                        if (P.PlayerIndex == I)                                                     //IF the indexed players ID matches the one who pressed start
+                            Found = true;                                                           //Flip the tempbool to indicate that we have found the an identical player
                     }
-                    if (!Found)
-                        GameObjectManager.Add(new Player(new Vector2(I * 100, I * 100), I));
+                    if (!Found)                                                                     //IF we didnt find a player with the same ID 
+                        GameObjectManager.Add(new Player(new Vector2(I * 100, I * 100), I));        //Adds a new player to the game with the new ID
                 }
             }
         }

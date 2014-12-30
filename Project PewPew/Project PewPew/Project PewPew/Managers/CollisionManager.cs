@@ -8,90 +8,202 @@ namespace Project_PewPew
 {
     static class CollisionManager
     {
-        static List<Enemy> Enemies = new List<Enemy>();
-        static List<GameObject> MainObjects = new List<GameObject>();
-        public static void Initialize()
+        static List<Enemy> Enemies = new List<Enemy>();                 //List of all enemies
+        static List<GameObject> MainObjects = new List<GameObject>();   //List of all game objects
+        public static void Update(ref GameTime GameTime)
         {
-            GameObjectManager.Get_GameObjects(out MainObjects);
-            GameObjectManager.Get_Enemies(out Enemies);
-        }
+            GameObjectManager.Get_GameObjects(out MainObjects);         //Gets the latest list of gameobjects from the GameObjectManager to ensure its still up to date.   
+            GameObjectManager.Get_Enemies(out Enemies);                 //Same for the list of enemies.
 
-        public static void Test()
-        {
-            foreach (GameObject GO in MainObjects)
+            for (int I = 0; I < MainObjects.Count; I++)                 //Loops all game objects
             {
-                Console.WriteLine("test");
+                if (MainObjects[I] is Actor)                            //Checks if its an actor
+                    for (int Y = I + 1; Y < MainObjects.Count; Y++)     //To ensure that no objects are tested against each other twice
+                    {
+                        if (MainObjects[Y] is Actor)                    //Checks to see if the second object is also an actor
+                            if (CheckCollision(MainObjects[I] as Actor, MainObjects[Y] as Actor))               //Checks to see if the basic collision is true
+                                ManageCollision(MainObjects[I] as Actor, MainObjects[Y] as Actor, ref GameTime);//Manages collisiion between the two objects
+                    }
             }
         }
 
-        public static void Update()
+        /// <summary>
+        /// Your worst Nightmare.
+        /// Nested if-statements beyond belife. 
+        /// Checks two objects for their type and send them into the proper collision functions
+        /// </summary>
+        /// <param name="A">The first object in the collision</param>
+        /// <param name="B">The second object in the collision</param>
+        /// <param name="GameTime"> a referance to GameTime</param>
+        private static void ManageCollision(Actor A, Actor B, ref GameTime GameTime)
         {
-            //foreach (Enemy E in Enemies)
-            //{
-            //    test(E);
-            //}
-            for (int I = 0; I < Enemies.Count; I++)
+            if (A is Player)
             {
-                for (int Y = I + 1; Y < Enemies.Count; Y++) //To ensure that no objects are tested against each other twice
+                if (B is Player)
                 {
-                    HandleCollision(Enemies[I], Enemies[Y]);
+                    HandleCollision(A as Player, B as Player, ref GameTime);
+                }
+                else if (B is Enemy)
+                {
+                    HandleCollision(A as Player, B as Enemy, ref GameTime);
+                }
+                else if (B is Turret)
+                {
+                    HandleCollision(A as Player, B as Turret, ref GameTime);
+                }
+                else if (B is Projectile)
+                {
+                    HandleCollision(A as Player, B as Projectile, ref GameTime);
+                }
+            }
+            else if (A is Enemy)
+            {
+                if (B is Player)
+                {
+                    HandleCollision(A as Enemy, B as Player, ref GameTime);
+                }
+                else if (B is Enemy)
+                {
+                    HandleCollision(A as Enemy, B as Enemy, ref GameTime);
+                }
+                else if (B is Turret)
+                {
+                    HandleCollision(A as Enemy, B as Turret, ref GameTime);
+                }
+                else if (B is Projectile)
+                {
+                    HandleCollision(A as Enemy, B as Projectile, ref GameTime);
+                }
+            }
+            else if (A is Turret)
+            {
+                if (B is Player)
+                {
+                    HandleCollision(A as Turret, B as Player, ref GameTime);
+                }
+                else if (B is Enemy)
+                {
+                    HandleCollision(A as Turret, B as Enemy, ref GameTime);
+                }
+                else if (B is Turret)
+                {
+                    HandleCollision(A as Turret, B as Turret, ref GameTime);
+                }
+                else if (B is Projectile)
+                {
+                    HandleCollision(A as Turret, B as Projectile, ref GameTime);
+                }
+            }
+            else if (A is Projectile)
+            {
+                if (B is Player)
+                {
+                    HandleCollision(A as Projectile, B as Player, ref GameTime);
+                }
+                else if (B is Enemy)
+                {
+                    HandleCollision(A as Projectile, B as Enemy, ref GameTime);
+                }
+                else if (B is Turret)
+                {
+                    HandleCollision(A as Projectile, B as Turret, ref GameTime);
+                }
+                else if (B is Projectile)
+                {
+                    HandleCollision(A as Projectile, B as Projectile, ref GameTime);
                 }
             }
         }
-
-        private static void HandleCollision(Enemy A, Enemy B)
+        #region CollisionHandlers
+        /// <summary>
+        /// Handles collision between two players by returning both players to their last known position
+        /// </summary>
+        private static void HandleCollision(Player A, Player B, ref GameTime GameTime)
         {
-            //Console.WriteLine("I:" + I + " - Y: " + Y);
-            float Spacing = Vector2.Distance(A.CenterPos, B.CenterPos);
-            float CombinedSize = A.Size + B.Size;
-            if (Spacing < CombinedSize)
+            A.BumpBack();
+            B.BumpBack();
+        }
+        /// <summary>
+        /// Handles collision between a player and an enemy, by killing the enemy and inflicting damage to the player
+        /// </summary>
+        private static void HandleCollision(Player A, Enemy B, ref GameTime GameTime)
+        {
+            A.Damage(B.CollisionDamage);
+            B.Die();
+        }
+        /// <summary>
+        /// Handles collision between a player and a drone by returning them both to their last known position (Will be used for drones later) 
+        /// </summary>
+        private static void HandleCollision(Player A, Turret B, ref GameTime GameTime)
+        {
+            A.BumpBack();
+            B.BumpBack();
+        }
+        /// <summary>
+        /// Handles the collision between player and a projectile
+        /// Checks if the projectile is fired by a friendly player and if whether or not its indended to cause friendly fire.
+        /// </summary>
+        private static void HandleCollision(Player A, Projectile B, ref GameTime GameTime)
+        {
+            if (!B.Creator.Friendly || B.Weapon.FriendlyFire)
             {
-                bool LeftorRight = false;
-                if (Misc.Determine_MovingVertical(A.Velocity))
-                {
-                    if (A.CenterPos.X > B.CenterPos.X)
-                        LeftorRight = true;
-                }
-                else
-                {
-                    if (A.CenterPos.Y > B.CenterPos.Y)
-                        LeftorRight = true;
-                }
-
-
-                if (A.DistanceToTarget > B.DistanceToTarget)
-                {
-                    A.PushThisUnit((A.Velocity * ((CombinedSize - Spacing) / 8)) * -1);
-
-                    A.PushThisUnit(Misc.Perpendicular((A.Velocity * ((CombinedSize - Spacing) / 1)), LeftorRight));
-                }
-                else
-                {
-                    B.PushThisUnit((B.Velocity * ((CombinedSize - Spacing) / 8)) * -1);
-                    B.PushThisUnit(Misc.Perpendicular((B.Velocity * ((CombinedSize - Spacing) / 1)), LeftorRight));
-                }
-
+                A.Damage(B.Weapon.Damage);
+                B.Die();
             }
         }
+        /// <summary>
+        /// Handles collision between a player and an enemy, by killing the enemy and inflicting damage to the player
+        /// </summary>
+        private static void HandleCollision(Enemy A, Player B, ref GameTime GameTime)
+        {
+            A.Die();
+            B.Damage(A.CollisionDamage);
+        }
+        /// <summary>
+        /// Not implemented, unsure if it has a purpose
+        /// </summary>
+        private static void HandleCollision(Enemy A, Enemy B, ref GameTime GameTime) { }
+        private static void HandleCollision(Enemy A, Turret B, ref GameTime GameTime) {
+            A.BumpBack();
+            B.BumpBack();
+        }
+        private static void HandleCollision(Enemy A, Projectile B, ref GameTime GameTime)
+        {
+            A.Damage(B.Weapon.Damage);
+            B.Die();
+        }
+        private static void HandleCollision(Turret A, Player B, ref GameTime GameTime)
+        {
+            A.BumpBack();
+            B.BumpBack();
+        }
+        private static void HandleCollision(Turret A, Enemy B, ref GameTime GameTime)
+        {
+            A.BumpBack();
+            B.BumpBack();
+        }
+        private static void HandleCollision(Turret A, Turret B, ref GameTime GameTime) { }
+        private static void HandleCollision(Turret A, Projectile B, ref GameTime GameTime) { }
+        private static void HandleCollision(Projectile A, Player B, ref GameTime GameTime) { }
+        private static void HandleCollision(Projectile A, Enemy B, ref GameTime GameTime)
+        {
+            A.Die();
+            B.Damage(A.Weapon.Damage);
+        }
+        private static void HandleCollision(Projectile A, Turret B, ref GameTime GameTime) { }
+        private static void HandleCollision(Projectile A, Projectile B, ref GameTime GameTime) { }
+        #endregion
 
-        //private static void test(Enemy E)
-        //{
-
-        //    foreach (Enemy En in Enemies)
-        //    {
-        //    Vector2 C = Vector2.Zero;
-        //        if(E != En)
-        //        {
-        //            if((Vector2.Distance(E.CenterPos, En.CenterPos) < 30))
-        //            {
-        //                C = C - (E.CenterPos - En.CenterPos);
-        //            }
-        //        }
-        //    E.PushThisUnit(C);
-        //    }
 
 
-        //}
+        private static bool CheckCollision(Actor A, Actor B)
+        {
+            if (Vector2.Distance(A.CenterPos, B.CenterPos) <= (A.Size + B.Size))
+                return true;
+            else
+                return false;
+        }
+
 
     }
 }

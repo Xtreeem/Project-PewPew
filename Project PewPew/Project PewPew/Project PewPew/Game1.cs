@@ -11,16 +11,19 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Project_PewPew
 {
+
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        Random TestRandom;
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
-        Player PlayerOne;
+        Player PlayerOne, PlayerTwo;
 
         public Game1()
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            TestRandom = new Random();
         }
 
         protected override void Initialize()
@@ -29,18 +32,21 @@ namespace Project_PewPew
             Graphics.PreferredBackBufferWidth = 1920;
             Graphics.PreferMultiSampling = true;
             Graphics.ApplyChanges();
+            GameObjectManager.IniatlizeAIParamaters();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             TextureManager.LoadContent(Content);
-            CollisionManager.Initialize();
-            PlayerOne = new Player(new Vector2(200, 200), 1);
+            WeaponManager.Initialize();
+            //CollisionManager.Initialize();
+            PlayerOne = new Player(new Vector2(1500, 200), 1);
+            PlayerTwo = new Player(new Vector2(1500, 300), 2);
             SpawnMassEnemies();
             GameObjectManager.Add(PlayerOne);
-            CollisionManager.Test();
-            CollisionManager.Update();
+            GameObjectManager.Add(PlayerTwo);
+            //CollisionManager.Update();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
@@ -54,7 +60,7 @@ namespace Project_PewPew
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             GameObjectManager.Update(GameTime);
-            CollisionManager.Update();
+            CollisionManager.Update(ref GameTime);
             base.Update(GameTime);
         }
 
@@ -69,11 +75,11 @@ namespace Project_PewPew
 
         private void SpawnMassEnemies()
         {
-            for (int X = 0; X < 19; X++)
+            for (int X = 0; X < 10; X++)
             {
-                for (int Y = 0; Y < 11; Y++)
+                for (int Y = 0; Y < 10; Y++)
                 {
-                    Standard Test = new Standard(new Vector2(X*100, Y*100), ref PlayerOne);
+                    Standard Test = new Standard(new Vector2(X * 100, Y * 100), ref PlayerOne, ref TestRandom);
                     GameObjectManager.Add(Test);
                 }
             }

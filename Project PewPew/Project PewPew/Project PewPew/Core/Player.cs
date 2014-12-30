@@ -18,6 +18,7 @@ namespace Project_PewPew
             MovementSpeed = 0.6f;
             Color = Color.HotPink;
             objecttype = ObjectType.Wall;
+            InputManager.Set_PlayerActive(PlayerIndex, true);
         }
 
         public override void Update(GameTime GameTime)

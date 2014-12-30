@@ -176,6 +176,21 @@ namespace Project_PewPew
             MainObjects = MainObjects.Where(x => !x.Dying).ToList();    //Cleans out all of the dying objects from the Main Object list
             Projectiles = Projectiles.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
 
+
+            for (int I = 0; I < 4; I++)
+            {
+                if(InputManager.Is_Button_Clicked(I, Microsoft.Xna.Framework.Input.Buttons.Start))
+                {
+                bool Found = false;
+                    foreach (Player P in Players)
+                    {
+                        if (P.PlayerIndex == I)
+                            Found = true;
+                    }
+                    if (!Found)
+                        GameObjectManager.Add(new Player(new Vector2(I * 100, I * 100), I));
+                }
+            }
         }
 
         /// <summary>

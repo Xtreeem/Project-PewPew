@@ -15,7 +15,7 @@ namespace Project_PewPew
             MovementSpeed = 0.3f;
             Color = Color.DarkRed;
             Texture = TextureManager.Enemy;
-            AggroRange = 200f;
+            AggroRange = 20000f;
             DeAggroRange = 3000f;
             Size = 15;
             Armor = 5;

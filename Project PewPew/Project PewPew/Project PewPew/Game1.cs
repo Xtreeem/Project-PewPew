@@ -41,11 +41,11 @@ namespace Project_PewPew
             TextureManager.LoadContent(Content);
             WeaponManager.Initialize();
             //CollisionManager.Initialize();
-            PlayerOne = new Player(new Vector2(1500, 200), 1);
-            PlayerTwo = new Player(new Vector2(1500, 300), 2);
+            //PlayerOne = new Player(new Vector2(1500, 200), 1);
+            //PlayerTwo = new Player(new Vector2(1500, 300), 2);
             SpawnMassEnemies();
-            GameObjectManager.Add(PlayerOne);
-            GameObjectManager.Add(PlayerTwo);
+            //GameObjectManager.Add(PlayerOne);
+            //GameObjectManager.Add(PlayerTwo);
             //CollisionManager.Update();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }

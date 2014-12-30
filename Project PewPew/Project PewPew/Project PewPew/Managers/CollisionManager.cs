@@ -55,6 +55,10 @@ namespace Project_PewPew
                 {
                     HandleCollision(A as Player, B as Projectile, ref GameTime);
                 }
+                else if (B is PowerUp)
+                {
+                    HandleCollision(A as Player, B as PowerUp, ref GameTime);
+                }
             }
             else if (A is Enemy)
             {
@@ -73,6 +77,10 @@ namespace Project_PewPew
                 else if (B is Projectile)
                 {
                     HandleCollision(A as Enemy, B as Projectile, ref GameTime);
+                }
+                else if (B is PowerUp)
+                {
+                    HandleCollision(A as Enemy, B as PowerUp, ref GameTime);
                 }
             }
             else if (A is Turret)
@@ -93,6 +101,10 @@ namespace Project_PewPew
                 {
                     HandleCollision(A as Turret, B as Projectile, ref GameTime);
                 }
+                else if (B is PowerUp)
+                {
+                    HandleCollision(A as Turret, B as PowerUp, ref GameTime);
+                }
             }
             else if (A is Projectile)
             {
@@ -111,6 +123,33 @@ namespace Project_PewPew
                 else if (B is Projectile)
                 {
                     HandleCollision(A as Projectile, B as Projectile, ref GameTime);
+                }
+                else if (B is PowerUp)
+                {
+                    HandleCollision(A as Projectile, B as PowerUp, ref GameTime);
+                }
+            }
+            else if (A is PowerUp)
+            {
+                if (B is Player)
+                {
+                    HandleCollision(A as PowerUp, B as Player, ref GameTime);
+                }
+                else if (B is Enemy)
+                {
+                    HandleCollision(A as PowerUp, B as Enemy, ref GameTime);
+                }
+                else if (B is Turret)
+                {
+                    HandleCollision(A as PowerUp, B as Turret, ref GameTime);
+                }
+                else if (B is Projectile)
+                {
+                    HandleCollision(A as PowerUp, B as Projectile, ref GameTime);
+                }
+                else if (B is PowerUp)
+                {
+                    HandleCollision(A as PowerUp, B as PowerUp, ref GameTime);
                 }
             }
         }
@@ -152,6 +191,14 @@ namespace Project_PewPew
             }
         }
         /// <summary>
+        /// Handles collision between a Player and a PowerUp
+        /// Triggers the PowerUps PickedUp Functiona and passes in a referance to the Player
+        /// </summary>
+        private static void HandleCollision(Player A, PowerUp B, ref GameTime GameTime)
+        {
+            B.PickedUp(ref A);
+        }
+        /// <summary>
         /// Handles collision between a player and an enemy, by killing the enemy and inflicting damage to the player
         /// </summary>
         private static void HandleCollision(Enemy A, Player B, ref GameTime GameTime)
@@ -163,35 +210,110 @@ namespace Project_PewPew
         /// Not implemented, unsure if it has a purpose
         /// </summary>
         private static void HandleCollision(Enemy A, Enemy B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Handles collision between an Enemy and a Turret
+        /// Bumps both of them backwards to their last known position
+        /// </summary>
         private static void HandleCollision(Enemy A, Turret B, ref GameTime GameTime) {
             A.BumpBack();
             B.BumpBack();
         }
+        /// <summary>
+        /// Handles the collision between an Enemy and a Projectile
+        /// Damages the enemy based on the projectiles weapon then kills the projectile
+        /// </summary>
         private static void HandleCollision(Enemy A, Projectile B, ref GameTime GameTime)
         {
             A.Damage(B.Weapon.Damage);
             B.Die();
         }
+        /// <summary>
+        /// Not yet implemented
+        /// </summary>
+        private static void HandleCollision(Enemy A, PowerUp B, ref GameTime GameTime)
+        {
+        }
+        /// <summary>
+        /// Handles collision between a player and a turret
+        /// Bumps both the player and turret backwards to their last known position. 
+        /// Will be used for drones
+        /// </summary>
         private static void HandleCollision(Turret A, Player B, ref GameTime GameTime)
         {
             A.BumpBack();
             B.BumpBack();
         }
+        /// <summary>
+        /// Handles collision between an Enemy and a Turret.
+        /// Bumps back both objects to their last known position
+        /// </summary>
         private static void HandleCollision(Turret A, Enemy B, ref GameTime GameTime)
         {
             A.BumpBack();
             B.BumpBack();
         }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
         private static void HandleCollision(Turret A, Turret B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
         private static void HandleCollision(Turret A, Projectile B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
+        private static void HandleCollision(Turret A, PowerUp B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
         private static void HandleCollision(Projectile A, Player B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Handles Collision between a Projectile and an Enemy
+        /// Damages the Enemy based on the Projectiles weapon damage
+        /// </summary>
         private static void HandleCollision(Projectile A, Enemy B, ref GameTime GameTime)
         {
             A.Die();
             B.Damage(A.Weapon.Damage);
         }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
         private static void HandleCollision(Projectile A, Turret B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
         private static void HandleCollision(Projectile A, Projectile B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
+        private static void HandleCollision(Projectile A, PowerUp B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Handles collision between a Player and a PowerUp
+        /// Triggers the PowerUps PickedUp Functiona and passes in a referance to the Player
+        /// </summary>
+        private static void HandleCollision(PowerUp A, Player B, ref GameTime GameTime) {
+           A.PickedUp(ref B);
+        }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
+        private static void HandleCollision(PowerUp A, Enemy B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
+        private static void HandleCollision(PowerUp A, Turret B, ref GameTime GameTime) { }
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
+        private static void HandleCollision(PowerUp A, Projectile B, ref GameTime GameTime) { }
+
+        /// <summary>
+        /// Not Yet Implemented
+        /// </summary>
+        private static void HandleCollision(PowerUp A, PowerUp B, ref GameTime GameTime) { }
+
         #endregion
 
 

@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Project_PewPew
 {
-    class PowerUp : Actor
+    abstract class PowerUp : Actor
     {
 
-        public void PickedUp(ref Player Player)
+        public virtual void PickedUp(ref Player Player)
         {
             //Player.Weapon.AttackRate += 0.4; etc
             Die();

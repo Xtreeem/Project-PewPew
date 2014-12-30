@@ -17,7 +17,7 @@ namespace Project_PewPew
         Random TestRandom;
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
-        Player PlayerOne, PlayerTwo;
+        //Player PlayerOne, PlayerTwo;
 
         public Game1()
         {

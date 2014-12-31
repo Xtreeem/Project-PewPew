@@ -40,7 +40,7 @@ namespace Project_PewPew
             Weapon TempWeapon = new Weapon();
             #region BasicPew
             TempWeapon.Name = "BasicPew";
-            TempWeapon.AttackRate = 5.1f;
+            TempWeapon.AttackRate = 0.4f;
             TempWeapon.ProjectileSpeed = 0.9f;
             TempWeapon.ProjectileLifeTime = 5f;
             TempWeapon.Damage = 50f;

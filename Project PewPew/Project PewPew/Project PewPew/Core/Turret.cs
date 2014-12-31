@@ -14,25 +14,25 @@ namespace Project_PewPew
     }
     class Turret : Actor
     {
-        public TurretType TypeOfTurret { get; protected set; }
-        public Player Creator { get; protected set; }
-        Texture2D TurretTex;
-        Vector2 TurretOrigin;
         public float DistanceToTarget
         {
             get
             {
                 if (Target != null)
-                    return (Vector2.Distance(Position, Target.Position));
+                    return Vector2.Distance(Target.CenterPos, CenterPos);
                 else
-                    return 1000000;
+                    return 10000000;
             }
         }
+        public TurretType TypeOfTurret { get; protected set; }
+        public Player Creator { get; protected set; }
+        Texture2D TurretTex;
+        Vector2 TurretOrigin;
+
         public Actor Target { get; protected set; }
-        public float AttackRange { get; protected set; }
-        public bool NeedNewTarget { get { if (DistanceToTarget > AttackRange) return true; else return false; } }
         public Turret(Player Creator, Vector2 Position, TurretType TypeOfTurret)
         {
+
             this.TypeOfTurret = TypeOfTurret;
             this.Position = Position;
             Friendly = true;
@@ -52,7 +52,6 @@ namespace Project_PewPew
             Texture = TextureManager.TurretBase;
             TurretOrigin = new Vector2(TurretTex.Width / 2, TurretTex.Height / 2);
             objecttype = ObjectType.Wall;
-            AttackRange = 3000;
             Size = 20;
             Dying = false;
             this.Weapon = Creator.Weapon;
@@ -60,7 +59,8 @@ namespace Project_PewPew
 
         public override void Update(GameTime GameTime)
         {
-            IsTargetStillAlive();
+            CheckIfTargetIsAlive();
+            FaceTarget();
 
             if (Target != null)
                 Shoot(Vector2.Zero);
@@ -81,17 +81,22 @@ namespace Project_PewPew
             }
         }
 
-
         public override void Draw(SpriteBatch SpriteBatch)
         {
             SpriteBatch.Draw(Texture, Position, null, Color, 0f, Origin, 1f, SpriteEffects.None, 0f);
             SpriteBatch.Draw(TurretTex, Position, null, Color, Rotation, TurretOrigin, 1f, SpriteEffects.None, 0f);
         }
-        private void IsTargetStillAlive()
-        {
-            if (Target != null && Target.Dying == true)
-                Target = null;
 
+        private void CheckIfTargetIsAlive()
+        {
+            if (Target != null && Target.Dying)
+                Target = null;
         }
+        private void CheckIfTArgetIsOutOfRange()
+        {
+            if (DistanceToTarget > Weapon.ProjectileRange)
+                Target = null;
+        }
+
     }
 }

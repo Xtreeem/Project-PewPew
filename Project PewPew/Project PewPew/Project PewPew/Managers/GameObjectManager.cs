@@ -64,7 +64,7 @@ namespace Project_PewPew
         const float moveInOldDirInfluenceDefault = 1.0f;
         const float moveInFlockDirInfluenceDefault = 1.0f;
         const float moveInRandomDirInfluenceDefault = 0.05f;
-        const float maxTurnRadiansDefault = (float)Math.PI*2;
+        const float maxTurnRadiansDefault = (float)Math.PI * 2;
         const float perMemberWeightDefault = 1.0f;
         const float perDangerWeightDefault = 50.0f;
         const float perPlayerWeightDefault = 20.0f;
@@ -182,9 +182,10 @@ namespace Project_PewPew
 
             MainObjects = MainObjects.Where(x => !x.Dying).ToList();    //Cleans out all of the dying objects from the Main Object list
             Projectiles = Projectiles.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
+            Enemies = Enemies.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
 
             PressStartToJoinCheck();
-            
+
         }
 
         /// <summary>
@@ -224,18 +225,19 @@ namespace Project_PewPew
 
         private static void TurretUpdate(GameTime GameTime, Turret Turret)
         {
-            if (Turret.NeedNewTarget)
+            if(Turret.Target == null)
             {
                 foreach (Enemy E in Enemies)
                 {
-                    float DistanceToCandidate = Vector2.Distance(Turret.CenterPos, E.CenterPos); 
-                    if (DistanceToCandidate < Turret.DistanceToTarget && DistanceToCandidate < Turret.AttackRange)
+                    if (InputManager.Is_Button_Clicked(1, Microsoft.Xna.Framework.Input.Buttons.DPadRight))
+                        Console.WriteLine("break");
+
+                    if(Vector2.Distance(E.CenterPos, Turret.CenterPos) < Turret.DistanceToTarget)
                     {
-                        Turret.Set_Target (E);
+                        Turret.Set_Target(E);
                     }
                 }
             }
-            Turret.FaceTarget();
             Turret.Update(GameTime);
         }
 

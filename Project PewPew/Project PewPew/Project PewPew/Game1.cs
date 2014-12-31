@@ -39,7 +39,6 @@ namespace Project_PewPew
         {
             TextureManager.LoadContent(Content);
             WeaponManager.Initialize();
-            SpawnMassEnemies();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
@@ -81,9 +80,13 @@ namespace Project_PewPew
         {
             for (int I = 0; I < 4; I++)
             {
-                if (InputManager.Is_Button_Clicked(I, Buttons.Back))
+                if (InputManager.Is_Button_Clicked(I, Buttons.DPadDown))
                 {
                     GameObjectManager.Add(new AS_Increase(new Vector2(500, 500), 10f));
+                }
+                if(InputManager.Is_Button_Clicked(I, Buttons.DPadUp))
+                {
+                    SpawnMassEnemies();
                 }
             }
         }

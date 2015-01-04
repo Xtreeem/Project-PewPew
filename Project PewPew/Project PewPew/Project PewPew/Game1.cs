@@ -88,6 +88,10 @@ namespace Project_PewPew
                 {
                     SpawnMassEnemies();
                 }
+                if (InputManager.Is_Button_Clicked(I, Buttons.DPadRight))
+                {
+                    GameObjectManager.KillEverything();
+                }
             }
         }
 

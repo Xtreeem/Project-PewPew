@@ -59,7 +59,7 @@ namespace Project_PewPew
     static class GameObjectManager
     {
         // Default value for the AI parameters
-        const float detectionDefault = 10100.0f;
+        const float detectionDefault = 1000.0f;
         const float separationDefault = 120.0f;
         const float moveInOldDirInfluenceDefault = 1.0f;
         const float moveInFlockDirInfluenceDefault = 1.0f;
@@ -263,5 +263,15 @@ namespace Project_PewPew
             }
             Enemy.Update(GameTime, ref aiParameters);
         }
+
+        public static void KillEverything()
+        {
+            Enemies = new List<Enemy>();
+            MainObjects = new List<GameObject>();
+            Projectiles = new List<Projectile>();
+            Players = new List<Player>();
+            NewObjects = new List<GameObject>();
+        }
+
     }
 }

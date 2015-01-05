@@ -14,7 +14,6 @@ namespace Project_PewPew
         public Weapon Weapon { get; set; }
         protected float Armor { get; set; }
         public float Health { get; protected set; }
-        public float Size { get; protected set; }
         public Vector2 CenterPos { get { return Position + Origin; } }
         protected float Rotation { get; set; }
         public float MovementSpeed { get; protected set; }
@@ -34,6 +33,7 @@ namespace Project_PewPew
             ShootTimer += (float)GameTime.ElapsedGameTime.TotalSeconds;
             if (Direction != null)
                 Move(GameTime);
+            base.Update(GameTime);
         }
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch SpriteBatch)

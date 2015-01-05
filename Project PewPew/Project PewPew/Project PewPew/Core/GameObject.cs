@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -14,9 +15,12 @@ namespace Project_PewPew
         Enemy,
         Player
     }
-    public abstract class GameObject
+    public abstract class GameObject : IHasRect
     {
         protected Dictionary<ObjectType, Behaviors> behaviors;
+        public float Size { get; protected set; }
+
+        public RectangleF Rectangle { get; set; }
 
         public ObjectType ObjectType
         {
@@ -79,11 +83,18 @@ namespace Project_PewPew
         public bool Dying { get; protected set; }
 
         public virtual void Update(GameTime GameTime)
-        { }
+        {
+            UpdateRect();
+        }
+
+        private void UpdateRect()
+        {
+            Rectangle = new RectangleF(new PointF(Position.X, Position.Y), new SizeF(this.Size, this.Size));
+        }
 
         public virtual void Draw(SpriteBatch SpriteBatch)
         {
-            SpriteBatch.Draw(Texture, Position, Color.White);
+            SpriteBatch.Draw(Texture, Position, Microsoft.Xna.Framework.Color.White);
         }
         public GameObject()
         {

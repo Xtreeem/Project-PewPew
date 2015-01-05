@@ -20,7 +20,21 @@ namespace Project_PewPew
         protected Dictionary<ObjectType, Behaviors> behaviors;
         public float Size { get; protected set; }
 
-        public RectangleF Rectangle { get; set; }
+        public RectangleF Rectangle
+        {
+            get
+            {
+                if (rectangle == null)
+                    rectangle = new RectangleF(new PointF(Position.X, Position.Y), new SizeF(this.Size, this.Size));
+                return rectangle;
+            }
+        }
+
+        protected RectangleF rectangle
+        {
+            get;
+            set;
+        }
 
         public ObjectType ObjectType
         {
@@ -89,7 +103,7 @@ namespace Project_PewPew
 
         private void UpdateRect()
         {
-            Rectangle = new RectangleF(new PointF(Position.X, Position.Y), new SizeF(this.Size, this.Size));
+            rectangle = new RectangleF(new PointF(Position.X, Position.Y), new SizeF(this.Size, this.Size));
         }
 
         public virtual void Draw(SpriteBatch SpriteBatch)
@@ -114,7 +128,7 @@ namespace Project_PewPew
             float oldAngle = (float)Math.Atan2(oldDir.Y, oldDir.X);
             float desiredAngle = (float)Math.Atan2(newDir.Y, newDir.X);
             float differance = WrapAngle(desiredAngle - oldAngle);
-            
+
             differance = MathHelper.Clamp(differance, -maxTurnRadians, maxTurnRadians);
             float Test = WrapAngle(oldAngle + differance);
 
@@ -140,4 +154,5 @@ namespace Project_PewPew
         }
 
 
-}}
+    }
+}

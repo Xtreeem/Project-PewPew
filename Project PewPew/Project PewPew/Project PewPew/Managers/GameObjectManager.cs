@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -73,6 +74,8 @@ namespace Project_PewPew
         //Used to pass all AI parameters
         static AIParameters aiParameters = new AIParameters();
 
+
+        static QuadTree<GameObject> QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(0, 0), new SizeF(1920, 1080)));
         static List<Player> Players = new List<Player>();
         static List<Enemy> Enemies = new List<Enemy>();
         static List<GameObject> MainObjects = new List<GameObject>();       //List that will be used to track all GameObjects
@@ -185,7 +188,7 @@ namespace Project_PewPew
             Enemies = Enemies.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
 
             PressStartToJoinCheck();
-
+            DebugTestQuadTree();
         }
 
         /// <summary>
@@ -225,14 +228,14 @@ namespace Project_PewPew
 
         private static void TurretUpdate(GameTime GameTime, Turret Turret)
         {
-            if(Turret.Target == null)
+            if (Turret.Target == null)
             {
                 foreach (Enemy E in Enemies)
                 {
                     if (InputManager.Is_Button_Clicked(1, Microsoft.Xna.Framework.Input.Buttons.DPadRight))
                         Console.WriteLine("break");
 
-                    if(Vector2.Distance(E.CenterPos, Turret.CenterPos) < Turret.DistanceToTarget)
+                    if (Vector2.Distance(E.CenterPos, Turret.CenterPos) < Turret.DistanceToTarget)
                     {
                         Turret.Set_Target(E);
                     }
@@ -262,6 +265,16 @@ namespace Project_PewPew
                     Enemy.ReactTo(OtherObject, ref aiParameters);
             }
             Enemy.Update(GameTime, ref aiParameters);
+        }
+
+        public static void DebugTestQuadTree()
+        {
+            QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(0, 0), new SizeF(1920, 1080)));
+
+            foreach (GameObject GO in MainObjects)
+            {
+                QuadTreeTesting.Insert(GO);
+            }
         }
     }
 }

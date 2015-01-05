@@ -66,6 +66,7 @@
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -83,6 +84,9 @@
     <Compile Include="Core\Misc.cs" />
     <Compile Include="Behaviors\FleeBehavior.cs" />
     <Compile Include="Behaviors\StandardAttackBehavior.cs" />
+    <Compile Include="Core\QuadTree\IHasRect.cs" />
+    <Compile Include="Core\QuadTree\QuadTree.cs" />
+    <Compile Include="Core\QuadTree\QuadTreeNode.cs" />
     <Compile Include="Core\Turret.cs" />
     <Compile Include="Managers\CollisionManager.cs" />
     <Compile Include="Managers\InputManager.cs" />

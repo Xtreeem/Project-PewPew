@@ -188,7 +188,7 @@ namespace Project_PewPew
             Enemies = Enemies.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
 
             PressStartToJoinCheck();
-            DebugTestQuadTree();
+            DebugTestQuadTreePopulate();
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Project_PewPew
             Enemy.Update(GameTime, ref aiParameters);
         }
 
-        public static void DebugTestQuadTree()
+        public static void DebugTestQuadTreePopulate()
         {
             QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(0, 0), new SizeF(1920, 1080)));
 
@@ -275,6 +275,13 @@ namespace Project_PewPew
             {
                 QuadTreeTesting.Insert(GO);
             }
+        }
+
+        public static void DebugTestQuadTreeAreaTest()
+        {
+            List<GameObject> Results;
+            Results = QuadTreeTesting.Query(new RectangleF(new PointF(Players[0].Position.X - 200, Players[0].Position.Y - 200), new SizeF(400, 400)));
+            Console.WriteLine(Results.Count());
         }
     }
 }

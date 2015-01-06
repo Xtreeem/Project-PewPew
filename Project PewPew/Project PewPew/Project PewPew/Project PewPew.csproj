@@ -84,7 +84,7 @@
     <Compile Include="Core\Misc.cs" />
     <Compile Include="Behaviors\FleeBehavior.cs" />
     <Compile Include="Behaviors\StandardAttackBehavior.cs" />
-    <Compile Include="Core\QuadTree\IHasRect.cs" />
+    <Compile Include="Core\QuadTree\QuadTreeFriendly.cs" />
     <Compile Include="Core\QuadTree\QuadTree.cs" />
     <Compile Include="Core\QuadTree\QuadTreeNode.cs" />
     <Compile Include="Core\Turret.cs" />

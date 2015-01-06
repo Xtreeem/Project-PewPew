@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Drawing;
-using System.Diagnostics;
-
 
 namespace Project_PewPew
 {
@@ -12,7 +11,7 @@ namespace Project_PewPew
     /// The QuadTreeNode
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class QuadTreeNode<T> where T : IHasRect
+    public class QuadTreeNode<T> where T : QuadTreeFriendly
     {
         /// <summary>
         /// Construct a quadtree node with the given bounds 
@@ -178,6 +177,8 @@ namespace Project_PewPew
             // 2) we're at the smallest subnode size allowed 
             // add the item to this node's contents.
             this.Contents.Add(item);
+            item.Clear_Nodes();
+            item.Set_Nodes(this as QuadTreeNode<GameObject>);
         }
 
         public void ForEach(QuadTree<T>.QTAction action)
@@ -206,5 +207,6 @@ namespace Project_PewPew
             m_nodes.Add(new QuadTreeNode<T>(new RectangleF(new PointF(m_bounds.Left + halfWidth, m_bounds.Top), new SizeF(halfWidth, halfHeight))));
             m_nodes.Add(new QuadTreeNode<T>(new RectangleF(new PointF(m_bounds.Left + halfWidth, m_bounds.Top + halfHeight), new SizeF(halfWidth, halfHeight))));
         }
+
     }
 }

@@ -88,9 +88,13 @@ namespace Project_PewPew
                 {
                     SpawnMassEnemies();
                 }
-                if(InputManager.Is_Button_Clicked(I, Buttons.DPadLeft))
+                if (InputManager.Is_Button_Clicked(I, Buttons.DPadLeft))
                 {
-                    GameObjectManager.DebugTestQuadTree();
+                    GameObjectManager.DebugTestQuadTreePopulate();
+                }
+                if (InputManager.Is_Button_Clicked(I, Buttons.DPadRight))
+                {
+                    GameObjectManager.DebugTestQuadTreeAreaTest();
                 }
             }
         }

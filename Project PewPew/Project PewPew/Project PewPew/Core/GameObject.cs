@@ -15,12 +15,12 @@ namespace Project_PewPew
         Enemy,
         Player
     }
-    public abstract class GameObject : IHasRect
+    public abstract class GameObject : QuadTreeFriendly
     {
         protected Dictionary<ObjectType, Behaviors> behaviors;
         public float Size { get; protected set; }
 
-        public List<QuadTreeNode<IHasRect>> CurrentNodes = new List<QuadTreeNode<IHasRect>>(); 
+        public List<QuadTreeNode<GameObject>> CurrentNodes { get; private set; } 
 
         public RectangleF Rectangle
         {
@@ -38,14 +38,14 @@ namespace Project_PewPew
             set;
         }
 
-        public void Set_Nodes(ref QuadTreeNode<IHasRect> CurrentNode)
+        public void Set_Nodes(QuadTreeNode<GameObject> CurrentNode)
         {
             CurrentNodes.Add(CurrentNode);
         }
 
         public void Clear_Nodes()
         {
-            CurrentNodes.Clear();
+            CurrentNodes = new List<QuadTreeNode<GameObject>>();
         }
 
         public ObjectType ObjectType

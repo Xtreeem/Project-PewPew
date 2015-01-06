@@ -59,9 +59,6 @@ namespace Project_PewPew
             {
                 Shoot(InputManager.Get_Aim_Direction(PlayerIndex));
             }
-
-            //if (InputManager.Is_Button_Pressed(PlayerIndex, Buttons.LeftTrigger))
-
             Direction = InputManager.Get_Movement_Direction(PlayerIndex);
             base.Update(GameTime);
         }

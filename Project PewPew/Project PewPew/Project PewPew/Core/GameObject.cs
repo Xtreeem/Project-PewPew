@@ -94,11 +94,6 @@ namespace Project_PewPew
         }
         protected bool fleeing = false;
 
-
-
-
-
-
         public Vector2 Direction { get; protected set; }
 
         public Vector2 Position { get; protected set; }

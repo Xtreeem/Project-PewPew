@@ -16,6 +16,7 @@ namespace Project_PewPew
         public static Texture2D TurretCanon { get; private set; }
         public static Texture2D BasicPowerUp { get; private set; }
         public static Texture2D AttackSpeedPowerUp { get; private set; }
+        public static Texture2D Debug_OnePixel { get; private set; }
 
         public static void LoadContent(ContentManager Content)
         {
@@ -26,7 +27,7 @@ namespace Project_PewPew
             TurretCanon = Content.Load<Texture2D>("../../Textures/Turrets/TurretCanon");
             BasicPowerUp = Content.Load<Texture2D>("../../Textures/PowerUp/PowerUp");
             AttackSpeedPowerUp = Content.Load<Texture2D>("../../Textures/PowerUp/ASPowerUp");
-
+            Debug_OnePixel = Content.Load<Texture2D>("../../Textures/Debug/OnePixel");
 
         }
     }

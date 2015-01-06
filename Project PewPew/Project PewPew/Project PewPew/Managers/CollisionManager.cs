@@ -8,14 +8,10 @@ namespace Project_PewPew
 {
     static class CollisionManager
     {
-        //static List<Enemy> Enemies = new List<Enemy>();                 //List of all enemies
         static List<GameObject> MainObjects = new List<GameObject>();   //List of all game objects
         public static void Update(ref GameTime GameTime)
         {
             GameObjectManager.Get_GameObjects(out MainObjects);         //Gets the latest list of gameobjects from the GameObjectManager to ensure its still up to date.   
-            //GameObjectManager.Get_Enemies(out Enemies);                 //Same for the list of enemies.
-
-
             foreach (GameObject GO in MainObjects)
             {
                 if(GO is Actor)
@@ -31,19 +27,6 @@ namespace Project_PewPew
 
                 }
             }
-
-
-
-            //for (int I = 0; I < MainObjects.Count; I++)                 //Loops all game objects
-            //{
-            //    if (MainObjects[I] is Actor)                            //Checks if its an actor
-            //        for (int Y = I + 1; Y < MainObjects.Count; Y++)     //To ensure that no objects are tested against each other twice
-            //        {
-            //            if (MainObjects[Y] is Actor)                    //Checks to see if the second object is also an actor
-            //                if (CheckCollision(MainObjects[I] as Actor, MainObjects[Y] as Actor))               //Checks to see if the basic collision is true
-            //                    ManageCollision(MainObjects[I] as Actor, MainObjects[Y] as Actor, ref GameTime);//Manages collisiion between the two objects
-            //        }
-            //}
         }
 
         /// <summary>

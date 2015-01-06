@@ -310,9 +310,6 @@ namespace Project_PewPew
 
         public static void Debug_QuadTree_AreaTest()
         {
-            //List<GameObject> Results;
-            //Results = QuadTreeTesting.Query(new RectangleF(new PointF(Players[0].Position.X - 200, Players[0].Position.Y - 200), new SizeF(400, 400)));
-            //Console.WriteLine(Results.Count());
             if (Players.Count > 0)
                 Console.WriteLine(Get_GameObjects_Around_Object(Players[0], 400).Count);
 

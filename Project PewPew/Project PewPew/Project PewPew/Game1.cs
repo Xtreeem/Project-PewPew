@@ -51,7 +51,7 @@ namespace Project_PewPew
             InputManager.Update();
             DebugStuff();
             GameObjectManager.Update(GameTime);
-            CollisionManager.Update(ref GameTime);
+            //CollisionManager.Update(ref GameTime);
             base.Update(GameTime);
         }
 

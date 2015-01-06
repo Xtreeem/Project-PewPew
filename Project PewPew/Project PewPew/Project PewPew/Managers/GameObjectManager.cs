@@ -61,21 +61,31 @@ namespace Project_PewPew
     {
         // Default value for the AI parameters
         const float detectionDefault = 10100.0f;
-        const float separationDefault = 120.0f;
+        const float separationDefault = 50.0f;
         const float moveInOldDirInfluenceDefault = 1.0f;
         const float moveInFlockDirInfluenceDefault = 1.0f;
         const float moveInRandomDirInfluenceDefault = 0.05f;
         const float maxTurnRadiansDefault = (float)Math.PI * 2;
-        const float perMemberWeightDefault = 1.0f;
-        const float perDangerWeightDefault = 50.0f;
+        const float perMemberWeightDefault = 3.0f;
+        const float perDangerWeightDefault = 30.0f;
         const float perPlayerWeightDefault = 20.0f;
         const float WallRadiusDefault = 80f;
 
         //Used to pass all AI parameters
         static AIParameters aiParameters = new AIParameters();
 
+        static int StandardObjectInteractionRange = 50; //Radius of the box we use to interact with
 
-        static QuadTree<GameObject> QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(0, 0), new SizeF(1920, 1080)));
+        //Quad-Tree Variables
+        static int QT_StartingX = -500;
+        static int QT_StartingY = -500;
+        static int QT_Width = 2920;
+        static int QT_Height = 2080;
+        
+        static QuadTree<GameObject> QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(QT_StartingX, QT_StartingY), new SizeF(QT_Width, QT_Height)));
+        
+        
+        
         static List<Player> Players = new List<Player>();
         static List<Enemy> Enemies = new List<Enemy>();
         static List<GameObject> MainObjects = new List<GameObject>();       //List that will be used to track all GameObjects
@@ -188,7 +198,7 @@ namespace Project_PewPew
             Enemies = Enemies.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
 
             PressStartToJoinCheck();
-            DebugTestQuadTreePopulate();
+            Debug_QuadTree_Populate();
         }
 
         /// <summary>
@@ -259,17 +269,28 @@ namespace Project_PewPew
                 }
             }
             Enemy.ResetThink();
-            foreach (GameObject OtherObject in MainObjects)
+            foreach (GameObject OtherObject in Get_GameObjects_Around_Object(Enemy, StandardObjectInteractionRange))
             {
                 if (Enemy != OtherObject)
                     Enemy.ReactTo(OtherObject, ref aiParameters);
             }
+            for (int I = 0; I < Players.Count; I++)
+            {
+                Enemy.ReactTo(Players[I], ref aiParameters);
+            }
             Enemy.Update(GameTime, ref aiParameters);
         }
 
-        public static void DebugTestQuadTreePopulate()
+        public static List<GameObject> Get_GameObjects_Around_Object(GameObject Origin, int RadiusToScan)
         {
-            QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(0, 0), new SizeF(1920, 1080)));
+            List<GameObject> Results;
+            Results = QuadTreeTesting.Query(new RectangleF(new PointF(Origin.Position.X - RadiusToScan, Origin.Position.Y - RadiusToScan), new SizeF(RadiusToScan * 2, RadiusToScan * 2)));
+            return Results;
+        }
+
+        public static void Debug_QuadTree_Populate()
+        {
+            QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(QT_StartingX, QT_StartingY), new SizeF(QT_Width, QT_Height)));
 
             foreach (GameObject GO in MainObjects)
             {
@@ -277,11 +298,23 @@ namespace Project_PewPew
             }
         }
 
-        public static void DebugTestQuadTreeAreaTest()
+        public static void Debug_QuadTree_AreaTest()
         {
-            List<GameObject> Results;
-            Results = QuadTreeTesting.Query(new RectangleF(new PointF(Players[0].Position.X - 200, Players[0].Position.Y - 200), new SizeF(400, 400)));
-            Console.WriteLine(Results.Count());
+            //List<GameObject> Results;
+            //Results = QuadTreeTesting.Query(new RectangleF(new PointF(Players[0].Position.X - 200, Players[0].Position.Y - 200), new SizeF(400, 400)));
+            //Console.WriteLine(Results.Count());
+            if (Players.Count > 0)
+                Console.WriteLine(Get_GameObjects_Around_Object(Players[0], 400).Count);
+
+        }
+        public static void Debug_Clear_AllLists()
+        {
+            QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(QT_StartingX, QT_StartingY), new SizeF(QT_Width, QT_Height)));
+            Players = new List<Player>();
+            Enemies = new List<Enemy>();
+            MainObjects = new List<GameObject>();
+            Projectiles = new List<Projectile>();
+            NewObjects = new List<GameObject>();
         }
     }
 }

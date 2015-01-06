@@ -46,7 +46,7 @@ namespace Project_PewPew
                 Vector2.Normalize(ref pushDirection, out pushDirection);
 
                 //push away
-                weight *= (1 -
+                weight *= (15 -
                     (float)Owner.ReactionDistance / aiParams.SeparationDistance);
 
                 pushDirection *= weight;

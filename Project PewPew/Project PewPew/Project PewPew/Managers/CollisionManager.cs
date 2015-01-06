@@ -15,6 +15,15 @@ namespace Project_PewPew
             GameObjectManager.Get_GameObjects(out MainObjects);         //Gets the latest list of gameobjects from the GameObjectManager to ensure its still up to date.   
             GameObjectManager.Get_Enemies(out Enemies);                 //Same for the list of enemies.
 
+            ///TODO: Implement QuadTree so as to only check each object in the main list against objects in an box 
+            ///around it using its own size, something like 
+            ///foreach (Actor A in MainObjects)
+            ///{
+            ///     foreach(GameObject GO in GameObjectManager.Query(A, A.Size + 20)
+            ///}
+
+
+
             for (int I = 0; I < MainObjects.Count; I++)                 //Loops all game objects
             {
                 if (MainObjects[I] is Actor)                            //Checks if its an actor

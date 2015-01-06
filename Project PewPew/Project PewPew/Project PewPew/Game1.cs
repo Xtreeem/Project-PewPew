@@ -90,11 +90,15 @@ namespace Project_PewPew
                 }
                 if (InputManager.Is_Button_Clicked(I, Buttons.DPadLeft))
                 {
-                    GameObjectManager.DebugTestQuadTreePopulate();
+                    GameObjectManager.Debug_QuadTree_Populate();
                 }
                 if (InputManager.Is_Button_Clicked(I, Buttons.DPadRight))
                 {
-                    GameObjectManager.DebugTestQuadTreeAreaTest();
+                    GameObjectManager.Debug_QuadTree_AreaTest();
+                }
+                if (InputManager.Is_Button_Clicked(I, Buttons.Back))
+                {
+                    GameObjectManager.Debug_Clear_AllLists();
                 }
             }
         }

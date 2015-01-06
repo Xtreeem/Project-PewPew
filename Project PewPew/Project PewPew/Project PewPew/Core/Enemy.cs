@@ -104,8 +104,8 @@ namespace Project_PewPew
                 reactionLocation = otherLocation;
                 reactionDistance = Vector2.Distance(Position, otherLocation);
 
-                if (reactionDistance < AIparams.DetectionDistance)
-                {
+                //if (reactionDistance < AIparams.DetectionDistance)
+                //{
                     if (otherObject.ObjectType != ObjectType.Generic)
                     {
                         Behaviors reactions = behaviors[otherObject.ObjectType];
@@ -119,7 +119,7 @@ namespace Project_PewPew
                             }
                         }
                     }
-                }
+                //}
             }
 
         }

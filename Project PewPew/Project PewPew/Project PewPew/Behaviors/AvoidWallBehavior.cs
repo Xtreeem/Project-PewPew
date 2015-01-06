@@ -26,12 +26,9 @@ namespace Project_PewPew
             if (Vector2.Dot(
                 Owner.Position, Owner.ReactionLocation) >= -(Math.PI / 2))
             {
-                Owner.Fleeing = true;
                 reacted = true;
-
                 dangerDirection = Owner.Position - Owner.ReactionLocation;
                 Vector2.Normalize(ref dangerDirection, out dangerDirection);
-
                 reaction = ((aiParams.PerDangerWeight * 2) * dangerDirection);
             }
 

@@ -60,15 +60,15 @@ namespace Project_PewPew
     static class GameObjectManager
     {
         // Default value for the AI parameters
-        const float detectionDefault = 10100.0f;
+        const float detectionDefault = 10000.0f;
         const float separationDefault = 50.0f;
         const float moveInOldDirInfluenceDefault = 1.0f;
         const float moveInFlockDirInfluenceDefault = 1.0f;
         const float moveInRandomDirInfluenceDefault = 0.05f;
         const float maxTurnRadiansDefault = (float)Math.PI * 2;
         const float perMemberWeightDefault = 3.0f;
-        const float perDangerWeightDefault = 30.0f;
-        const float perPlayerWeightDefault = 20.0f;
+        const float perDangerWeightDefault = 50.0f;
+        const float perPlayerWeightDefault = 40.0f;
         const float WallRadiusDefault = 80f;
 
         //Used to pass all AI parameters
@@ -88,6 +88,7 @@ namespace Project_PewPew
         
         static List<Player> Players = new List<Player>();
         static List<Enemy> Enemies = new List<Enemy>();
+        static List<Turret> Turrets = new List<Turret>();
         static List<GameObject> MainObjects = new List<GameObject>();       //List that will be used to track all GameObjects
         static List<Projectile> Projectiles = new List<Projectile>();   //List that will be used to track all the Projectiles
         static List<GameObject> NewObjects = new List<GameObject>();    //List used to temporarely store all new Objects added to the Manager during an update cycle 
@@ -147,6 +148,8 @@ namespace Project_PewPew
                     Players.Add(Obj as Player);
                 else if (Obj is Enemy)
                     Enemies.Add(Obj as Enemy);
+                else if (Obj is Turret)
+                    Turrets.Add(Obj as Turret);
             }
         }
 
@@ -164,6 +167,8 @@ namespace Project_PewPew
                 Players.Add(Obj as Player);
             else if (Obj is Enemy)
                 Enemies.Add(Obj as Enemy);
+            else if (Obj is Turret)
+            Turrets.Add(Obj as Turret);
         }
 
         /// <summary>
@@ -196,6 +201,7 @@ namespace Project_PewPew
             MainObjects = MainObjects.Where(x => !x.Dying).ToList();    //Cleans out all of the dying objects from the Main Object list
             Projectiles = Projectiles.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
             Enemies = Enemies.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
+            Turrets = Turrets.Where(x => !x.Dying).ToList();    //Cleans out any dead turrets from the list
 
             PressStartToJoinCheck();
             Debug_QuadTree_Populate();
@@ -277,6 +283,10 @@ namespace Project_PewPew
             for (int I = 0; I < Players.Count; I++)
             {
                 Enemy.ReactTo(Players[I], ref aiParameters);
+            }
+            for (int I = 0; I < Turrets.Count; I++)
+            {
+                Enemy.ReactTo(Turrets[I], ref aiParameters);
             }
             Enemy.Update(GameTime, ref aiParameters);
         }

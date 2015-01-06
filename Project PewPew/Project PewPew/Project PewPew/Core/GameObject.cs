@@ -20,6 +20,8 @@ namespace Project_PewPew
         protected Dictionary<ObjectType, Behaviors> behaviors;
         public float Size { get; protected set; }
 
+        public List<QuadTreeNode<IHasRect>> CurrentNodes = new List<QuadTreeNode<IHasRect>>(); 
+
         public RectangleF Rectangle
         {
             get
@@ -34,6 +36,16 @@ namespace Project_PewPew
         {
             get;
             set;
+        }
+
+        public void Set_Nodes(ref QuadTreeNode<IHasRect> CurrentNode)
+        {
+            CurrentNodes.Add(CurrentNode);
+        }
+
+        public void Clear_Nodes()
+        {
+            CurrentNodes.Clear();
         }
 
         public ObjectType ObjectType

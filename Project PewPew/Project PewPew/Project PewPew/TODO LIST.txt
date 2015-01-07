@@ -1,5 +1,4 @@
 ﻿TODO:
-	-Tower Aggro is wonky
 	-Support Multiple Projectiles in a single shot
 	-Fix the aggro and deaggro system
 	-Make sure enemies without a target dont fly away 

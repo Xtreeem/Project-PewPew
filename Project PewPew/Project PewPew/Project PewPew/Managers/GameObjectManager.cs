@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -59,22 +60,35 @@ namespace Project_PewPew
     static class GameObjectManager
     {
         // Default value for the AI parameters
-        const float detectionDefault = 1000.0f;
-        const float separationDefault = 120.0f;
+        const float detectionDefault = 10000.0f;
+        const float separationDefault = 50.0f;
         const float moveInOldDirInfluenceDefault = 1.0f;
         const float moveInFlockDirInfluenceDefault = 1.0f;
         const float moveInRandomDirInfluenceDefault = 0.05f;
         const float maxTurnRadiansDefault = (float)Math.PI * 2;
-        const float perMemberWeightDefault = 1.0f;
+        const float perMemberWeightDefault = 3.0f;
         const float perDangerWeightDefault = 50.0f;
-        const float perPlayerWeightDefault = 20.0f;
+        const float perPlayerWeightDefault = 40.0f;
         const float WallRadiusDefault = 80f;
 
         //Used to pass all AI parameters
         static AIParameters aiParameters = new AIParameters();
 
+        static int StandardObjectInteractionRange = 50; //Radius of the box we use to interact with
+
+        //Quad-Tree Variables
+        static int QT_StartingX = -500;
+        static int QT_StartingY = -500;
+        static int QT_Width = 2920;
+        static int QT_Height = 2080;
+        
+        static QuadTree<GameObject> QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(QT_StartingX, QT_StartingY), new SizeF(QT_Width, QT_Height)));
+        
+        
+        
         static List<Player> Players = new List<Player>();
         static List<Enemy> Enemies = new List<Enemy>();
+        static List<Turret> Turrets = new List<Turret>();
         static List<GameObject> MainObjects = new List<GameObject>();       //List that will be used to track all GameObjects
         static List<Projectile> Projectiles = new List<Projectile>();   //List that will be used to track all the Projectiles
         static List<GameObject> NewObjects = new List<GameObject>();    //List used to temporarely store all new Objects added to the Manager during an update cycle 
@@ -134,6 +148,8 @@ namespace Project_PewPew
                     Players.Add(Obj as Player);
                 else if (Obj is Enemy)
                     Enemies.Add(Obj as Enemy);
+                else if (Obj is Turret)
+                    Turrets.Add(Obj as Turret);
             }
         }
 
@@ -151,6 +167,8 @@ namespace Project_PewPew
                 Players.Add(Obj as Player);
             else if (Obj is Enemy)
                 Enemies.Add(Obj as Enemy);
+            else if (Obj is Turret)
+            Turrets.Add(Obj as Turret);
         }
 
         /// <summary>
@@ -183,9 +201,10 @@ namespace Project_PewPew
             MainObjects = MainObjects.Where(x => !x.Dying).ToList();    //Cleans out all of the dying objects from the Main Object list
             Projectiles = Projectiles.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
             Enemies = Enemies.Where(x => !x.Dying).ToList();    //Cleans out all of the dying projectiles from the projeectile list
+            Turrets = Turrets.Where(x => !x.Dying).ToList();    //Cleans out any dead turrets from the list
 
             PressStartToJoinCheck();
-
+            Debug_QuadTree_Populate();
         }
 
         /// <summary>
@@ -225,14 +244,14 @@ namespace Project_PewPew
 
         private static void TurretUpdate(GameTime GameTime, Turret Turret)
         {
-            if(Turret.Target == null)
+            if (Turret.Target == null)
             {
                 foreach (Enemy E in Enemies)
                 {
                     if (InputManager.Is_Button_Clicked(1, Microsoft.Xna.Framework.Input.Buttons.DPadRight))
                         Console.WriteLine("break");
 
-                    if(Vector2.Distance(E.CenterPos, Turret.CenterPos) < Turret.DistanceToTarget)
+                    if (Vector2.Distance(E.CenterPos, Turret.CenterPos) < Turret.DistanceToTarget)
                     {
                         Turret.Set_Target(E);
                     }
@@ -256,22 +275,53 @@ namespace Project_PewPew
                 }
             }
             Enemy.ResetThink();
-            foreach (GameObject OtherObject in MainObjects)
+            foreach (GameObject OtherObject in Get_GameObjects_Around_Object(Enemy, StandardObjectInteractionRange))
             {
                 if (Enemy != OtherObject)
                     Enemy.ReactTo(OtherObject, ref aiParameters);
             }
+            for (int I = 0; I < Players.Count; I++)
+            {
+                Enemy.ReactTo(Players[I], ref aiParameters);
+            }
+            for (int I = 0; I < Turrets.Count; I++)
+            {
+                Enemy.ReactTo(Turrets[I], ref aiParameters);
+            }
             Enemy.Update(GameTime, ref aiParameters);
         }
 
-        public static void KillEverything()
+        public static List<GameObject> Get_GameObjects_Around_Object(GameObject Origin, int RadiusToScan)
         {
+            List<GameObject> Results;
+            Results = QuadTreeTesting.Query(new RectangleF(new PointF(Origin.Position.X - RadiusToScan, Origin.Position.Y - RadiusToScan), new SizeF(RadiusToScan * 2, RadiusToScan * 2)));
+            return Results;
+        }
+
+        public static void Debug_QuadTree_Populate()
+        {
+            QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(QT_StartingX, QT_StartingY), new SizeF(QT_Width, QT_Height)));
+
+            foreach (GameObject GO in MainObjects)
+            {
+                QuadTreeTesting.Insert(GO);
+            }
+        }
+
+        public static void Debug_QuadTree_AreaTest()
+        {
+            if (Players.Count > 0)
+                Console.WriteLine(Get_GameObjects_Around_Object(Players[0], 400).Count);
+
+        }
+        public static void Debug_Clear_AllLists()
+        {
+            QuadTreeTesting = new QuadTree<GameObject>(new RectangleF(new PointF(QT_StartingX, QT_StartingY), new SizeF(QT_Width, QT_Height)));
+            Players = new List<Player>();
             Enemies = new List<Enemy>();
             MainObjects = new List<GameObject>();
             Projectiles = new List<Projectile>();
-            Players = new List<Player>();
             NewObjects = new List<GameObject>();
         }
-
     }
 }

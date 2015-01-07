@@ -9,7 +9,5 @@ namespace Project_PewPew
     {
         protected float PowerUpStrength;
         public virtual void PickedUp(ref Player Player) { }
-
-
     }
 }

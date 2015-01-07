@@ -23,7 +23,7 @@ namespace Project_PewPew
             Health = 10000;
             Armor = 10;
             Weapon = WeaponManager.Get_Weapon("BasicPew");
-            SecondaryWeapon = WeaponManager.Get_Weapon("BasicPew");
+            SecondaryWeapon = WeaponManager.Get_Weapon("SecondaryPew");
             Friendly = true;
         }
 
@@ -46,6 +46,7 @@ namespace Project_PewPew
                     Color = Color.Yellow;
                 }
 
+            ///Placing Turret logic
             if (InputManager.Is_Button_Pressed(PlayerIndex, Buttons.LeftTrigger))
             {
                 if (InputManager.Is_Button_Clicked(PlayerIndex, Buttons.RightTrigger))
@@ -55,13 +56,13 @@ namespace Project_PewPew
                     GameObjectManager.Add(TempTurret);
                 }
             }
+            ///Shooting logic
             else if (InputManager.Is_Button_Pressed(PlayerIndex, Buttons.RightTrigger))
             {
                 Shoot(InputManager.Get_Aim_Direction(PlayerIndex));
             }
-
-            //if (InputManager.Is_Button_Pressed(PlayerIndex, Buttons.LeftTrigger))
-
+            if (InputManager.Is_Button_Clicked(PlayerIndex, Buttons.Y))
+                SwapWeapon();
             Direction = InputManager.Get_Movement_Direction(PlayerIndex);
             base.Update(GameTime);
         }
@@ -82,7 +83,7 @@ namespace Project_PewPew
         {
             Weapon T = Weapon;
             Weapon = SecondaryWeapon;
-            SecondaryWeapon = Weapon;
+            SecondaryWeapon = T;
         }
 
         public void GetWeaponPoweredUp(Weapon Modification)

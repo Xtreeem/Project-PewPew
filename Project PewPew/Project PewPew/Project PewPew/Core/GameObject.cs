@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -14,9 +15,38 @@ namespace Project_PewPew
         Enemy,
         Player
     }
-    public abstract class GameObject
+    public abstract class GameObject : QuadTreeFriendly
     {
         protected Dictionary<ObjectType, Behaviors> behaviors;
+        public float Size { get; protected set; }
+
+        public List<QuadTreeNode<GameObject>> CurrentNodes { get; private set; } 
+
+        public RectangleF Rectangle
+        {
+            get
+            {
+                if (rectangle == null)
+                    rectangle = new RectangleF(new PointF(Position.X, Position.Y), new SizeF(this.Size, this.Size));
+                return rectangle;
+            }
+        }
+
+        protected RectangleF rectangle
+        {
+            get;
+            set;
+        }
+
+        public void Set_Nodes(QuadTreeNode<GameObject> CurrentNode)
+        {
+            CurrentNodes.Add(CurrentNode);
+        }
+
+        public void Clear_Nodes()
+        {
+            CurrentNodes = new List<QuadTreeNode<GameObject>>();
+        }
 
         public ObjectType ObjectType
         {
@@ -64,11 +94,6 @@ namespace Project_PewPew
         }
         protected bool fleeing = false;
 
-
-
-
-
-
         public Vector2 Direction { get; protected set; }
 
         public Vector2 Position { get; protected set; }
@@ -79,11 +104,18 @@ namespace Project_PewPew
         public bool Dying { get; protected set; }
 
         public virtual void Update(GameTime GameTime)
-        { }
+        {
+            UpdateRect();
+        }
+
+        private void UpdateRect()
+        {
+            rectangle = new RectangleF(new PointF(Position.X, Position.Y), new SizeF(this.Size, this.Size));
+        }
 
         public virtual void Draw(SpriteBatch SpriteBatch)
         {
-            SpriteBatch.Draw(Texture, Position, Color.White);
+            SpriteBatch.Draw(Texture, Position, Microsoft.Xna.Framework.Color.White);
         }
         public GameObject()
         {
@@ -103,7 +135,7 @@ namespace Project_PewPew
             float oldAngle = (float)Math.Atan2(oldDir.Y, oldDir.X);
             float desiredAngle = (float)Math.Atan2(newDir.Y, newDir.X);
             float differance = WrapAngle(desiredAngle - oldAngle);
-            
+
             differance = MathHelper.Clamp(differance, -maxTurnRadians, maxTurnRadians);
             float Test = WrapAngle(oldAngle + differance);
 
@@ -130,4 +162,5 @@ namespace Project_PewPew
 
         
 
-}}
+    }
+}

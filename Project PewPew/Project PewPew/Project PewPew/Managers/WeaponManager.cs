@@ -54,6 +54,22 @@ namespace Project_PewPew
             TempWeapon.FriendlyFire = false;
             Weapons.Add(TempWeapon);
             #endregion
+            #region SecondaryPew
+            TempWeapon.Name = "SecondaryPew";
+            TempWeapon.AttackRate = 0.2f;
+            TempWeapon.ProjectileSpeed = 0.5f;
+            TempWeapon.ProjectileLifeTime = 4f;
+            TempWeapon.Damage = 10f;
+            TempWeapon.Explosive = false;
+            TempWeapon.FireMode = FireMode.FullAuto;
+            TempWeapon.Homing = false;
+            TempWeapon.NumberOfProjecties = 3;
+            TempWeapon.ProjectileRange = 800;
+            TempWeapon.ProjectileTexture = TextureManager.BasicBullet;
+            TempWeapon.Color = Color.Lime;
+            TempWeapon.FriendlyFire = false;
+            Weapons.Add(TempWeapon);
+            #endregion
         }
 
         public static Weapon Get_Weapon(string Name)

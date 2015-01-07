@@ -73,6 +73,7 @@ namespace Project_PewPew
                 else 
                 Temp = new Projectile(Position, new Vector2((float)Math.Cos(Rotation), (float)Math.Sin(Rotation)), this);
 
+                
                 GameObjectManager.Add(Temp);
             }
         }

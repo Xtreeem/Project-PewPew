@@ -15,8 +15,11 @@ namespace Project_PewPew
         public float ProjectileSpeed;       //Speed of the Projectile
         public float ProjectileLifeTime;    //The Time a projectile will live
         public float ProjectileRange;       //The distance a projectile may travel before despawning
+        public float ProjectileSpread;      //Distance between each bullet
+        public float Accuracy;              //How accurate the weapon is
         public int NumberOfProjecties;      //Number of shots fired
         public FireMode FireMode;           //How the weapon Fires
+        public SpreadMode SpreadMode;       //Defines how the bullets will behave
         public bool Homing;                 //Is the attack Homing
         public bool Explosive;              //Will the attack explode on hit
         public Texture2D ProjectileTexture; //Texture used for the projectiles
@@ -31,6 +34,14 @@ namespace Project_PewPew
         Semi,
         FullAuto
     }
+
+    public enum SpreadMode
+    {
+        Line,
+        Cone,
+        Cluster
+    }
+
     public static class WeaponManager
     {
         private static List<Weapon> Weapons = new List<Weapon>();
@@ -41,13 +52,16 @@ namespace Project_PewPew
             #region BasicPew
             TempWeapon.Name = "BasicPew";
             TempWeapon.AttackRate = 0.4f;
-            TempWeapon.ProjectileSpeed = 0.9f;
+            TempWeapon.ProjectileSpeed = 0.1f;
             TempWeapon.ProjectileLifeTime = 5f;
+            TempWeapon.ProjectileSpread = 8;
+            TempWeapon.Accuracy = 100;
             TempWeapon.Damage = 50f;
             TempWeapon.Explosive = false;
             TempWeapon.FireMode = FireMode.FullAuto;
+            TempWeapon.SpreadMode = SpreadMode.Line;
             TempWeapon.Homing = false;
-            TempWeapon.NumberOfProjecties = 1;
+            TempWeapon.NumberOfProjecties = 7;
             TempWeapon.ProjectileRange = 1000;
             TempWeapon.ProjectileTexture = TextureManager.BasicBullet;
             TempWeapon.Color = Color.White;
@@ -59,11 +73,14 @@ namespace Project_PewPew
             TempWeapon.AttackRate = 0.2f;
             TempWeapon.ProjectileSpeed = 0.5f;
             TempWeapon.ProjectileLifeTime = 4f;
+            TempWeapon.ProjectileSpread = 8f;
+            TempWeapon.Accuracy = 50;
             TempWeapon.Damage = 10f;
             TempWeapon.Explosive = false;
             TempWeapon.FireMode = FireMode.FullAuto;
+            TempWeapon.SpreadMode = SpreadMode.Line;
             TempWeapon.Homing = false;
-            TempWeapon.NumberOfProjecties = 3;
+            TempWeapon.NumberOfProjecties = 20;
             TempWeapon.ProjectileRange = 800;
             TempWeapon.ProjectileTexture = TextureManager.BasicBullet;
             TempWeapon.Color = Color.Lime;

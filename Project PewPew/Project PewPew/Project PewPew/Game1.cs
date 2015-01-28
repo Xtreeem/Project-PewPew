@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Threading.Tasks;
 
 namespace Project_PewPew
 {
@@ -40,6 +41,7 @@ namespace Project_PewPew
             TextureManager.LoadContent(Content);
             WeaponManager.Initialize();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            //Task.Factory.StartNew(() => CollisionManager.Update());
         }
 
         protected override void UnloadContent()
@@ -51,7 +53,7 @@ namespace Project_PewPew
             InputManager.Update();
             DebugStuff();
             GameObjectManager.Update(GameTime);
-            CollisionManager.Update(ref GameTime);
+            //CollisionManager.Update();
             base.Update(GameTime);
         }
 

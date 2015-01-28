@@ -36,6 +36,16 @@ namespace Project_PewPew
                 return false;
         }
 
+        public static float ToAngle(Vector2 vector)
+        {
+            return (float)Math.Atan2(vector.Y, vector.X);
+        }
+
+        public static float NextFloat(float minValue, float maxValue)
+        {
+            return (float)Random.NextDouble() * (maxValue - minValue) + minValue;
+        }
+
         public static Vector2 FromPolar(float Angle, float Magnitude)
         {
             return Magnitude * new Vector2((float)Math.Cos(Angle), (float)Math.Sin(Angle));

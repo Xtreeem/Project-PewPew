@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Project_PewPew
 {
-    
+
 
     public abstract class Actor : GameObject
     {
@@ -65,16 +65,90 @@ namespace Project_PewPew
         {
             if (Weapon.AttackRate < ShootTimer)
             {
-                Projectile Temp;
+                //Projectile Temp;
+                //ShootTimer = 0;
+                //if (Direction != Vector2.Zero)
+                //    Temp = new Projectile(Position, Direction, this);
+                //else
+                //    Temp = new Projectile(Position, new Vector2((float)Math.Cos(Rotation), (float)Math.Sin(Rotation)), this);
+                //GameObjectManager.Add(Temp);
+                //if(Weapon.NumberOfProjecties % 2 != 0)
+                //{
+                //    if (Direction == Vector2.Zero)
+                //        Direction = new Vector2((float)Math.Cos(Rotation), (float)Math.Sin(Rotation));
+                //    float AimAngle = Misc.ToAngle(Direction);                                                     //Converts the players input into an angle
+                //    Quaternion AimQuat = Quaternion.CreateFromYawPitchRoll(0, 0, AimAngle);             //Confusing magic used to Rotate the projectiles around ship
+                //    float RandomSpread = Misc.NextFloat(-0.04f, 0.04f) + Misc.NextFloat(-0.04f, 0.04f); //Adds a bit of random spread to the shot
+                //    Vector2 Velocity = Misc.FromPolar(AimAngle + RandomSpread, 11f);                //Creates the velocity tthat the bullets will be using
+                //    GameObjectManager.Add(new Projectile(Position, Velocity, this));                 //Adds the first projectile to the GameObjectManager
+                //}
+                //if (Weapon.NumberOfProjecties % 2 == 0)
+                //{
+
+                //    if (Direction == Vector2.Zero)
+                //        Direction = new Vector2((float)Math.Cos(Rotation), (float)Math.Sin(Rotation));
+                //    float AimAngle = Misc.ToAngle(Direction);                                                     //Converts the players input into an angle
+                //    Quaternion AimQuat = Quaternion.CreateFromYawPitchRoll(0, 0, AimAngle);             //Confusing magic used to Rotate the projectiles around ship
+                //    float RandomSpread = Misc.NextFloat(-0.04f, 0.04f) + Misc.NextFloat(-0.04f, 0.04f); //Adds a bit of random spread to the shot
+                //    Vector2 Velocity = Misc.FromPolar(AimAngle + RandomSpread, 11f);                //Creates the velocity tthat the bullets will be using
+                //    Vector2 Offset = Vector2.Transform(new Vector2(35, -8), AimQuat);                   //Calculates the offset the projectiles will use
+                //    GameObjectManager.Add(new Projectile(Position + Offset, Velocity, this));                 //Adds the first projectile to the GameObjectManager
+                //    Offset = Vector2.Transform(new Vector2(35, 8), AimQuat);                            //Inverts the offset (Sorta) 
+                //    GameObjectManager.Add(new Projectile(Position + Offset, Velocity, this));                 //Adds the first projectile to the GameObjectManager
+                //}
+
+                switch (Weapon.SpreadMode)
+                {
+                    case SpreadMode.Line:
+                        #region LineFire
+                        bool Up = true;
+                        int IncrementOffsetCounter = 2;
+                        if (Direction == Vector2.Zero)
+                            Direction = new Vector2((float)Math.Cos(Rotation), (float)Math.Sin(Rotation));
+                        float AimAngle = Misc.ToAngle(Direction);
+                        Quaternion AimQuat = Quaternion.CreateFromYawPitchRoll(0, 0, AimAngle);
+                        float RandomSpread = Misc.NextFloat(-0.04f, 0.04f) + Misc.NextFloat(-0.04f, 0.04f);
+                        Vector2 Velocity = Misc.FromPolar(AimAngle + RandomSpread, 11f);
+                        float Spread = Weapon.ProjectileSpread;
+                        Vector2 Offset = Vector2.Transform(new Vector2(35, 0), AimQuat);
+                        int LoopStart = 0;
+                        if (Weapon.NumberOfProjecties % 2 != 0)
+                        {
+                            GameObjectManager.Add(new Projectile(Position + Offset, Velocity, this));
+                            LoopStart = 1;
+                        }
+                        else
+                            Spread /= 2;
+
+                        for (int I = LoopStart; I < Weapon.NumberOfProjecties; I++)
+                        {
+                            if (Up)
+                            {
+                                Up = false;
+                                Offset = Vector2.Transform(new Vector2(35, -Spread), AimQuat);
+                            }
+                            else
+                            {
+                                Up = true;
+                                Offset = Vector2.Transform(new Vector2(35, Spread), AimQuat);
+                            }
+                            if (--IncrementOffsetCounter == 0)
+                            {
+                                Spread += Weapon.ProjectileSpread;
+                                IncrementOffsetCounter = 2;
+                            }
+                            GameObjectManager.Add(new Projectile(Position + Offset, Velocity, this));
+                        }
+                        #endregion
+                        break;
+                    case SpreadMode.Cone:
+                        break;
+                    case SpreadMode.Cluster:
+                        break;
+                    default:
+                        break;
+                }
                 ShootTimer = 0;
-                if (Direction != Vector2.Zero)
-                Temp = new Projectile(Position, Direction, this);
-
-                else 
-                Temp = new Projectile(Position, new Vector2((float)Math.Cos(Rotation), (float)Math.Sin(Rotation)), this);
-
-                
-                GameObjectManager.Add(Temp);
             }
         }
 
@@ -84,7 +158,7 @@ namespace Project_PewPew
         }
         public void Damage(float Amount)
         {
-            Health -= (Amount * (1- (Armor / 100)));
+            Health -= (Amount * (1 - (Armor / 100)));
         }
         public void Heal(float Amount)
         {

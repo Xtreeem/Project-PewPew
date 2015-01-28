@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Project_PewPew
 {
@@ -99,13 +100,10 @@ namespace Project_PewPew
         {
             if (otherObject != null)
             {
-
                 Vector2 otherLocation = otherObject.Position;
                 reactionLocation = otherLocation;
                 reactionDistance = Vector2.Distance(Position, otherLocation);
 
-                //if (reactionDistance < AIparams.DetectionDistance)
-                //{
                     if (otherObject.ObjectType != ObjectType.Generic)
                     {
                         Behaviors reactions = behaviors[otherObject.ObjectType];
@@ -119,7 +117,6 @@ namespace Project_PewPew
                             }
                         }
                     }
-                //}
             }
 
         }
